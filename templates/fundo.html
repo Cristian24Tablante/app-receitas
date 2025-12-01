@@ -1,0 +1,403 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Disney+</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Avenir Next', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: scroll;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                        url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .floating-logos {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .floating-logo {
+            position: absolute;
+            font-size: 5rem;
+            color: #fff;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            z-index: 10;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 200px;
+        }
+
+        .logo p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            background: rgba(19, 33, 68, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-header h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #2d3a5e;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: rgba(45, 58, 94, 0.5);
+            color: #fff;
+        }
+
+        .form-control::placeholder {
+            color: #a0a0a0;
+        }
+
+        .form-control:focus {
+            border-color: #0063e5;
+            outline: none;
+            background-color: rgba(45, 58, 94, 0.8);
+            box-shadow: 0 0 0 2px rgba(0, 99, 229, 0.3);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #a0a0a0;
+        }
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .terms input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .terms label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .terms a {
+            color: #0063e5;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #0063e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #0483ee;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #a0a0a0;
+        }
+
+        .login-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #2d3a5e;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #2d3a5e;
+            border-radius: 4px;
+            background: rgba(45, 58, 94, 0.5);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: rgba(45, 58, 94, 0.8);
+        }
+
+        .social-btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .google-btn i {
+            color: #DB4437;
+        }
+
+        .apple-btn i {
+            color: #fff;
+        }
+
+        .devices {
+            text-align: center;
+            margin-top: 30px;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        .devices i {
+            margin: 0 5px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            .logo img {
+                max-width: 180px;
+            }
+        }
+        
+        .back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;    
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    background-color: rgb(203, 12, 22);
+}
+    </style>
+
+    </head>
+<body>
+    <div class="floating-logos" id="floatingLogos"></div>
+    
+    <button class="back-btn" onclick="goBack()">
+    ← Voltar
+</button>
+    
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main> 
+    
+    
+   
+    <script>
+        function goBack() {
+    window.history.back();
+}
+        // Criar logos flutuantes
+        function createFloatingLogos() {
+            const container = document.getElementById('floatingLogos');
+            const logoCount = 8;
+            const characters = ['🏰', '🦁', '❄️', '🐠', '🚀', '🛡️', '🧜', '🔮'];
+            
+            for (let i = 0; i < logoCount; i++) {
+                const logo = document.createElement('div');
+                logo.classList.add('floating-logo');
+                logo.textContent = characters[i];
+                
+                // Posição aleatória
+                const posX = Math.random() * 100;
+                
+                // Duração da animação aleatória
+                const duration = Math.random() * 20 + 10;
+                
+                // Atraso aleatório
+                const delay = Math.random() * 5;
+                
+                // Tamanho aleatório
+                const size = Math.random() * 2 + 2;
+                
+                logo.style.left = `${posX}%`;
+                logo.style.fontSize = `${size}rem`;
+                logo.style.animationDuration = `${duration}s`;
+                logo.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(logo);
+            }
+        }
+        
+        // Alternar visibilidade da senha
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Validação do formulário
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem. Por favor, verifique.');
+                return;
+            }
+            
+            // Simulação de cadastro bem-sucedido
+            alert('Cadastro realizado com sucesso! Bem-vindo ao Disney+!');
+            // Aqui normalmente enviaríamos os dados para o servidor
+        });
+        
+        // Inicializar efeitos
+        createFloatingLogos();
+    </script>
+</body>
+</html>
