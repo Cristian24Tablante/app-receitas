@@ -55,9 +55,17 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         if (data.success) {
             // Login exitoso: Redirigir al Home
             window.location.href = '/'; 
-        } else {
-            alert('Error: ' + data.message);
         }
+        else if (data.mensage === 'contraseña incorrecta'){
+            alert('Contraseña incorrecta. Inténtalo de nuevo.');
+        }
+
+        else {
+            alert('Error: ' + data.message);
+            
+        }
+
+
     })
     .catch(error => {
         console.error('Error:', error);

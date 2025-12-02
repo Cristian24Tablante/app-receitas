@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spoiler com Sabor - Receitas de Filmes</title>
-     <link rel="icon" type="image/png" href="{{ url_for('static', filename='l.png') }}">
+    <title>MovieRecipes - Receitas de Filmes</title>
     <style>
         :root {
             --netflix-red: #e50914;
@@ -68,20 +67,54 @@
             color: var(--netflix-light-gray);
         }
         
-        /* Hero Section */
+        /* Hero Section - Modificado para Carrossel */
         .hero {
             height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5)), url('https://cinepop.com.br/wp-content/uploads/2021/06/ratatouille.jpg');
+            /* Fundo removido e agora controlado pelo JS/Backdrop */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             padding: 0 50px;
             margin-bottom: 30px;
+            position: relative; 
+        }
+
+        /* Novo elemento para o fundo dinâmico */
+        .hero-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Imagem padrão de fallback, será sobrescrita */
+            background-image: url('https://cinepop.com.br/wp-content/uploads/2021/06/ratatouille.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1; /* Abaixo do conteúdo principal */
+            transition: background-image 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            /* Pseudo-elemento para o gradiente de escurecimento */
+            opacity: 1;
+        }
+
+        .hero-backdrop::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(20, 20, 20, 0.9) 10%, rgba(20, 20, 20, 0) 90%);
         }
         
         .hero-content {
             max-width: 600px;
+            position: relative;
+            z-index: 5; /* Acima do backdrop */
+            /* Adicionado para a transição de conteúdo */
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
         }
         
         .hero-title {
@@ -111,6 +144,8 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s;
+            text-decoration: none; 
+            text-align: center;
         }
         
         .btn-primary {
@@ -129,6 +164,30 @@
         
         .btn-secondary:hover {
             background-color: rgba(109, 109, 110, 0.4);
+        }
+
+        /* Indicadores do Carrossel */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50px;
+            z-index: 5;
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .indicator.active {
+            background-color: var(--netflix-red);
+            transform: scale(1.2);
         }
         
         /* Carousel Sections */
@@ -317,136 +376,66 @@
                 min-width: 200px;
                 height: 120px;
             }
+            .carousel-indicators {
+                left: 20px;
+            }
         }
-      
-        .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;              /* separación entre icono y título */
-    margin-top: 20px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-icon {
-    width: 35px;
-    height: 35px;
-}
-
-.user-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Mover el título hacia la derecha */
-.titulo {
-    color: red;
-    font-size: 36px;
-    margin-left: 40px;      /* Ajusta este valor para mover más o menos */
-}
- 
-
-/* Añade al inicio de tu CSS */
-:root {
-    --netflix-red: #e50914;
-    --netflix-black: #141414;
-    --netflix-dark-gray: #2f2f2f;
-    --netflix-light-gray: #b3b3b3;
-    --netflix-white: #ffffff;
-}
-
-
-
-
-  
     </style>
 </head>
-<body style "">
-    <!-- Header -->
+<body>
     <header>
-       <div class="header-container">
-
-    {% if session.get('user_id') %}
-    <div class="user-info">
-        <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
-        <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
-    </div>
-    {% endif %}
-
-    <h1 class="titulo">Spoiler com Sabor</h1>
-
-</div>
+        <a href="#" class="logo">Spoiler com Sabor</a>
         <nav class="nav-links">
             <a href="#">Início</a>
             <a href="#">Séries</a>
             <a href="#">Filmes</a>
             <a href="#">Receitas</a>
-               {% if session.get('user_id') %}
-       
-        <a href="/logout">Sair</a>
-    {% else %}
-        <a href="/login">Entrar</a>
-        <a href="/cadastro">Cadastrar</a>
-     {% endif %}
-                
+            <a href="cadastro.html">Cadastro</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Seção HERO com Carrossel Dinâmico -->
     <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Ratatouille</h1>
-            <p class="hero-description">A clássica receita francesa que conquistou o coração de Anton Ego no filme homônimo. Uma explosão de sabores que prova que qualquer um pode cozinhar.</p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary">
-                    <span>▶</span> Ver Receita
-                </button>
-                <button class="btn btn-secondary">
-                    <span>ⓘ</span> Mais Informações
-                </button>
-            </div>
+        <!-- Elemento para o fundo com a imagem do carrossel -->
+        <div class="hero-backdrop" id="hero-backdrop"></div>
+        
+        <!-- Conteúdo (Título, Descrição, Botões) -->
+        <div class="hero-content" id="hero-content">
+            <!-- Conteúdo injetado pelo JavaScript -->
+        </div>
+
+        <!-- Indicadores de Slide -->
+        <div class="carousel-indicators" id="carousel-indicators">
+            <!-- Indicadores injetados pelo JavaScript -->
         </div>
     </section>
 
-    <!-- Carousel Sections -->
     <section class="section">
         <h2 class="section-title">Receitas Populares</h2>
         <div class="carousel" id="popular-recipes">
-            <!-- Receitas serão adicionadas via JavaScript -->
-        </div>
+            </div>
     </section>
 
     <section class="section">
         <h2 class="section-title">Receitas de Animação</h2>
         <div class="carousel" id="animation-recipes">
-            <!-- Receitas serão adicionadas via JavaScript -->
-        </div>
+            </div>
     </section>
 
     <section class="section">
         <h2 class="section-title">Receitas de Comédia</h2>
         <div class="carousel" id="comedy-recipes">
-            <!-- Receitas serão adicionadas via JavaScript -->
-        </div>
+            </div>
     </section>
 
     <section class="section">
         <h2 class="section-title">Receitas de Drama</h2>
         <div class="carousel" id="drama-recipes">
-            <!-- Receitas serão adicionadas via JavaScript -->
-        </div>
+            </div>
     </section>
 
-    <!-- Modal -->
     <div class="modal" id="recipe-modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
+        <div class="modal-content"> <button class="close-modal" id="close-modal">&times;</button>
             <div class="modal-header">
                 <img id="modal-image" src="" alt="">
             </div>
@@ -463,13 +452,8 @@
                     <h3>Modo de Preparo</h3>
                     <ol id="modal-instructions"></ol>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>MovieRecipes &copy; 2023 - Todas as receitas inspiradas no mundo do cinema</p>
+            </div> </div> </div> <footer>
+        <p>Spoiler com Sabor &copy; 2025 - Todas as receitas inspiradas no mundo do cinema</p>
     </footer>
 
     <script>
@@ -481,7 +465,10 @@
                 movie: "Ratatouille (2007)",
                 category: "animation",
                 image: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/dcb0a241-a928-4719-9234-bec074d7a045/compose?aspectRatio=1.78&format=webp&width=440",
-                
+                link: "Ratatouille.html",
+                // Dados do modal adicionados para consistência, caso o link não funcione
+                ingredients: ["Abobrinha", "Beringela", "Tomate", "Pimentão", "Azeite"],
+                instructions: ["Fatiar e assar os legumes com temperos."]
             },
             {
                 id: 2,
@@ -489,6 +476,8 @@
                 movie: "Eat Pray Love (2010)",
                 category: "drama",
                 image: "https://m.media-amazon.com/images/S/pv-target-images/9a82e18fa9db91d28e5c4d5e47fe75aa19a4d6d241c0cec6409c8cda99d3c74a.jpg",
+                // Usando link interno/padrão para Carbonara, removendo externalLink
+                link: "#",
                 ingredients: [
                     "400g de espaguete",
                     "150g de pancetta ou bacon em cubos",
@@ -503,7 +492,7 @@
                     "Em uma tigela, bata as gemas com o queijo ralado e pimenta preta.",
                     "Escorra a massa, reservando um pouco da água do cozimento.",
                     "Misture rapidamente a massa quente com o ovo e o queijo, adicionando um pouco da água do cozimento para criar um creme.",
-                    "Adicione a pancetta e sirva imediat-amente."
+                    "Adicione a pancetta e sirva imediatamente."
                 ]
             },
             {
@@ -512,6 +501,7 @@
                 movie: "Matilda (1996)",
                 category: "comedy",
                 image: "https://m.media-amazon.com/images/S/pv-target-images/d2ad55410f97683ae880cfe5bf36482cc2f84d888414b2addf4dd73970b8b33e.jpg",
+                link: "Matilda.html", 
                 ingredients: [
                     "2 xícaras de farinha de trigo",
                     "1 xícara de cacau em pó",
@@ -534,13 +524,13 @@
                     "Deixe esfriar antes de desenformar e servir."
                 ]
             },
-               
             {
                 id: 4,
                 title: "Baozi",
                 movie: "Kung Fu Panda (2008)",
                 category: "animation",
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmWItJQ1kYn_ppjP4RhHhm6ODmN-oEbsYRFA&s",
+                link: "#", // Usando link padrão
                 ingredients: [
                     "1/2 xícara de farinha de trigo",
                     "1 colher de sopa de amido de milho",
@@ -565,6 +555,7 @@
                 id: 5,
                 title: "Beignets",
                 movie: "The Princess and the Frog (2009)",
+                link: "RedBeignets.html",
                 category: "animation",
                 image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi54VekDAMTChO6ZHqDpgSdV8vqTmGaVkw6O7-qgQ64s_uaMazERkc7VrUskwC59p3VLhMBJNXdyyfvNYlbKinnJZfmd-cy-rZP9i9IE1dnr28RZgS2pFfER-bGyVGjOg13JUgt3kRm5WE/s1000/a+princesa+e+o+sapo.png",
                 ingredients: [
@@ -592,40 +583,167 @@
             }
         ];
 
+        // Variáveis do Carrossel do Hero
+        const heroRecipes = [recipes[0], recipes[1], recipes[2]]; // Apenas as 3 primeiras receitas para o carrossel
+        let currentSlideIndex = 0;
+        let carouselInterval;
+
+        /**
+         * Abre o modal com os detalhes da receita.
+         * Esta função é acessível globalmente para os botões "Mais Informações" do carrossel.
+         */
+        function openModalById(id) {
+            const recipe = recipes.find(r => r.id === id);
+            
+            // Verifica se a receita tem dados de ingredientes/instruções para o modal
+            if (recipe && recipe.ingredients && recipe.instructions && recipe.ingredients.length > 0) {
+                openModal(recipe);
+            } else if (recipe && (recipe.link || recipe.externalLink)) {
+                // Se não tem dados do modal, redireciona para a página da receita (como o Ratatouille original)
+                window.location.href = recipe.link || recipe.externalLink;
+            } else {
+                console.error(`Receita ID ${id} não encontrada ou não tem dados para modal.`);
+            }
+        }
+        window.openModalById = openModalById;
+
+        /**
+         * Atualiza o conteúdo visual (imagem, texto, botões) do carrossel do Hero.
+         */
+        function updateHeroCarousel(index) {
+            const recipe = heroRecipes[index];
+            const heroBackdrop = document.getElementById('hero-backdrop');
+            const heroContent = document.getElementById('hero-content');
+            const indicatorsContainer = document.getElementById('carousel-indicators');
+
+            // 1. Atualiza a Imagem de Fundo (Backdrop)
+            // Usamos a propriedade CSS background-image para a transição
+            heroBackdrop.style.backgroundImage = `url('${recipe.image}')`;
+            
+            // 2. Atualiza o Conteúdo Principal (Título, Descrição, Botões)
+            let description = `${recipe.movie}. Receita em destaque desta semana.`;
+            if (recipe.id === 1) { // Descrição especial para Ratatouille
+                description = `A clássica receita francesa que conquistou o coração de Anton Ego no filme ${recipe.movie}. Uma explosão de sabores que prova que qualquer um pode cozinhar.`;
+            }
+
+            heroContent.innerHTML = `
+                <h1 class="hero-title">${recipe.title}</h1>
+                <p class="hero-description">${description}</p>
+                <div class="hero-buttons">
+                    <a href="${recipe.link || recipe.externalLink || '#'}" class="btn btn-primary">
+                        <span>▶</span>
+                        Ver Receita
+                    </a>
+                    <button class="btn btn-secondary" onclick="openModalById(${recipe.id})">
+                        <span>ⓘ</span> Mais Informações
+                    </button>
+                </div>
+            `;
+
+            // 3. Cria e/ou Atualiza os Indicadores de Slide
+            if (indicatorsContainer.children.length === 0) {
+                heroRecipes.forEach((_, i) => {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'indicator';
+                    indicator.onclick = () => {
+                        resetCarouselInterval();
+                        updateHeroCarousel(i);
+                    };
+                    indicatorsContainer.appendChild(indicator);
+                });
+            }
+
+            // 4. Marca o indicador ativo
+            Array.from(indicatorsContainer.children).forEach((indicator, i) => {
+                indicator.classList.remove('active');
+                if (i === index) {
+                    indicator.classList.add('active');
+                }
+            });
+
+            currentSlideIndex = index;
+        }
+
+        /**
+         * Move para o próximo slide.
+         */
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % heroRecipes.length;
+            updateHeroCarousel(currentSlideIndex);
+        }
+
+        /**
+         * Inicia o ciclo automático do carrossel.
+         */
+        function startCarouselInterval() {
+            // Intervalo de 5 segundos
+            carouselInterval = setInterval(nextSlide, 5000); 
+        }
+
+        /**
+         * Reseta o ciclo do carrossel após uma interação manual.
+         */
+        function resetCarouselInterval() {
+            clearInterval(carouselInterval);
+            startCarouselInterval();
+        }
+
         // Função para criar os cards de receita
         function createRecipeCards() {
             const popularRecipesContainer = document.getElementById('popular-recipes');
             const animationRecipesContainer = document.getElementById('animation-recipes');
             const comedyRecipesContainer = document.getElementById('comedy-recipes');
             const dramaRecipesContainer = document.getElementById('drama-recipes');
-            
+
             recipes.forEach(recipe => {
-                const card = document.createElement('div');
-                card.className = 'recipe-card';
-                card.innerHTML = `
-                    <img src="${recipe.image}" alt="${recipe.title}">
+                // 1. Cria a estrutura HTML base
+                const baseCard = document.createElement('div');
+                baseCard.className = 'recipe-card';
+                baseCard.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.title}" onerror="this.onerror=null;this.src='https://placehold.co/200x120/141414/e50914?text=SEM+IMAGEM'">
+                    
                     <div class="recipe-info">
                         <div class="recipe-title">${recipe.title}</div>
                         <div class="recipe-movie">${recipe.movie}</div>
                     </div>
                 `;
                 
-                card.addEventListener('click', () => openModal(recipe));
+                // 2. Define a LÓGICA DE CLIQUE para os carrosséis da seção
+                const clickHandler = () => {
+                    openModalById(recipe.id);
+                };
+
+                // 3. Adiciona a cópia do card e o evento de clique a CADA container
+
+                // CÓPIA PARA RECEITAS POPULARES (todos são populares aqui)
+                const popularCard = baseCard.cloneNode(true);
+                popularCard.addEventListener('click', clickHandler);
+                popularRecipesContainer.appendChild(popularCard);
                 
-                // Adiciona aos carrosséis apropriados
-                popularRecipesContainer.appendChild(card.cloneNode(true));
-                
+                // CÓPIA PARA ANIMAÇÃO
                 if (recipe.category === 'animation') {
-                    animationRecipesContainer.appendChild(card.cloneNode(true));
-                } else if (recipe.category === 'comedy') {
-                    comedyRecipesContainer.appendChild(card.cloneNode(true));
-                } else if (recipe.category === 'drama') {
-                    dramaRecipesContainer.appendChild(card.cloneNode(true));
+                    const animationCard = baseCard.cloneNode(true);
+                    animationCard.addEventListener('click', clickHandler);
+                    animationRecipesContainer.appendChild(animationCard);
+                } 
+                
+                // CÓPIA PARA COMÉDIA
+                if (recipe.category === 'comedy') {
+                    const comedyCard = baseCard.cloneNode(true);
+                    comedyCard.addEventListener('click', clickHandler);
+                    comedyRecipesContainer.appendChild(comedyCard);
+                } 
+                
+                // CÓPIA PARA DRAMA
+                if (recipe.category === 'drama') {
+                    const dramaCard = baseCard.cloneNode(true);
+                    dramaCard.addEventListener('click', clickHandler);
+                    dramaRecipesContainer.appendChild(dramaCard);
                 }
             });
         }
 
-        // Função para abrir o modal com os detalhes da receita
+        // Função para preencher e abrir o modal
         function openModal(recipe) {
             const modal = document.getElementById('recipe-modal');
             const modalImage = document.getElementById('modal-image');
@@ -639,18 +757,16 @@
             modalTitle.textContent = recipe.title;
             modalSubtitle.textContent = recipe.movie;
             
-            // Limpa as listas anteriores
+            // Limpa e Adiciona os ingredientes
             modalIngredients.innerHTML = '';
-            modalInstructions.innerHTML = '';
-            
-            // Adiciona os ingredientes
             recipe.ingredients.forEach(ingredient => {
                 const li = document.createElement('li');
                 li.textContent = ingredient;
                 modalIngredients.appendChild(li);
             });
             
-            // Adiciona as instruções
+            // Limpa e Adiciona as instruções
+            modalInstructions.innerHTML = '';
             recipe.instructions.forEach(instruction => {
                 const li = document.createElement('li');
                 li.textContent = instruction;
@@ -686,6 +802,8 @@
         // Inicializar o site
         document.addEventListener('DOMContentLoaded', () => {
             createRecipeCards();
+            updateHeroCarousel(0); // Inicializa o primeiro slide do carrossel
+            startCarouselInterval(); // Inicia o ciclo automático
         });
     </script>
 </body>
