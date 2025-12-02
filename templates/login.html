@@ -1,25 +1,21 @@
-{% extends "fundo.html" %}
-
-{% block title %}Login - Spoiler com Sabor{% endblock %}
-
-{% block content %}
+{% extends "fundo.html" %} {% block title %}Login - Spoiler com Sabor{% endblock %} {% block content %}
 <div class="container">
     <div class="logo">
         <p>Aprenda as receitas seus filmes e séries favoritos</p>
     </div>
-    
+
     <div class="form-container">
         <div class="form-header">
             <h2>LOGIN</h2>
             <p>Insira seus dados</p>
         </div>
-    
-        <form id="loginForm"> 
+
+        <form id="loginForm">
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="seu@email.com" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Senha</label>
                 <div class="password-container">
@@ -29,9 +25,11 @@
                     </span>
                 </div>
             </div>
-            
+
             <button type="submit" class="btn">Continuar</button>
-        </form> <div class="login-link">
+        </form>
+
+        <div class="login-link">
             Não tem conta? <a href="/cadastro">Fazer Cadastro</a>
         </div>
         <div class="devices"></div>
@@ -39,66 +37,98 @@
 </div>
 
 <script>
-// OJO: Cambié el ID a loginForm para no confundir
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    
-    // CORRECCIÓN: Ahora enviamos a /login, no a /cadastrar
-    fetch('/login', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Login exitoso: Redirigir al Home
-            window.location.href = '/'; 
-        }
-        else if (data.mensage === 'contraseña incorrecta'){
-            alert('Contraseña incorrecta. Inténtalo de nuevo.');
-        }
+    // Evento do formulário
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-        else {
-            alert('Error: ' + data.message);
-            
-        }
+        const formData = new FormData(this);
 
-
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al conectar con el servidor');
+        fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    console.log("DEBUG => resposta do backend:", data);
+                    mostrarErroLogin();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao conectar com o servidor');
+            });
     });
-});
 
-document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('password');
-    const icon = this.querySelector('i');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.className = 'far fa-eye-slash';
-    } else {
-        passwordInput.type = 'password';
-        icon.className = 'far fa-eye';
+    // Mostrar/ocultar senha
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.className = 'far fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            icon.className = 'far fa-eye';
+        }
+    });
+
+    // Função da imagem + texto
+    function mostrarErroLogin() {
+        const box = document.createElement("div");
+
+        box.style.position = "fixed";
+        box.style.bottom = "250px";
+        box.style.right = "1000px";
+        box.style.width = "300px";
+        box.style.padding = "0";
+        box.style.borderRadius = "12px";
+        box.style.overflow = "hidden";
+        box.style.boxShadow = "0 0 12px rgba(0,0,0,0.35)";
+        box.style.zIndex = "9999";
+        box.style.background = "#000";
+
+        const img = document.createElement("img");
+        img.src = "https://img.freepik.com/vetores-gratis/fundo-de-cinema-de-design-plano_23-2150998489.jpg?semt=ais_hybrid&w=740&q=80";
+        img.style.width = "100%";
+        img.style.display = "block";
+
+        const txt = document.createElement("div");
+        txt.innerText = "Usuário ou senha incorretas";
+        txt.style.position = "absolute";
+        txt.style.bottom = "100px";
+        txt.style.left = "50%";
+        txt.style.transform = "translateX(-50%)";
+        txt.style.color = "white";
+        txt.style.fontSize = "15px";
+        txt.style.fontWeight = "bold";
+        txt.style.textShadow = "0 0 5px black";
+
+        box.appendChild(img);
+        box.appendChild(txt);
+        document.body.appendChild(box);
+
+        // opcional: sumir depois de 3 segundos
+        setTimeout(() => box.remove(), 3000);
     }
-});
 </script>
 
 <style>
-.password-container {
-    position: relative;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #666;
-}
+    .password-container {
+        position: relative;
+    }
+    
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #666;
+    }
 </style>
+
 {% endblock %}
