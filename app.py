@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session
 from database import get_db
-import MySQLdb
+
 # --- AGREGA ESTA LÍNEA AQUÍ ---
 from werkzeug.security import generate_password_hash, check_password_hash
 # ------------------------------
