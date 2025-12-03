@@ -171,16 +171,36 @@ def listar_usuarios():
     except Exception as e:
         return f"Error: {str(e)}"
 
-    
-    
+@app.route('/EatPrayLove')
+def eatpraylove_page():
+    """Página de receitas de Eat Pray Love"""
+    return render_template('EatPrayLove.html')
+
+ 
 @app.route('/ratatouille')
-def ratatouille():
-    """Página de receitas do ratatouille"""
+def ratatouille_page():
+    """Página especial de Ratatouille"""
     return render_template('ratatouille.html')
 
+
+@app.route('/kung')
+def kungfu_page():
+    """Página de receitas de Kung Fu Panda"""
+    return render_template('kung.html')
+
+@app.route('/matilda')
+def matilda_page():
+    """Página de receitas de Matilda"""
+    return render_template('matilda.html')
+
+
+@app.route('/beignets')
+def beignets_page():
+    """Página de receitas de Beignets"""
+    return render_template('beignets.html')
 
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
     
-    
+   

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baozi do Kung Fu Panda</title>
+    <style>
+        /* IMPORTANDO FONTES */
+        /* 'Cinzel' para o título principal (elegante/oriental) */
+        /* 'Great Vibes' ou 'Allura' para a palavra "Ingredientes" (manuscrita) */
+        /* 'Lato' para o texto corrido */
+        
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Allura&family=Lato:wght@300;400;700&display=swap');
+         :root {
+            --bg-cream: #F9F7E8;
+            /* Fundo do cabeçalho */
+            --bg-mustard: #FFCC66;
+            /* Fundo Ingredientes (Amarelo/Laranja suave) */
+            --bg-brown: #7A4210;
+            /* Fundo Modo de Preparo (Marrom) */
+            --text-brown: #5C3A1E;
+            /* Texto escuro */
+            --text-light: #F9F7E8;
+            /* Texto claro */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #F9F7E8;
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            gap: 50px;
+        }
+        /* CONFIGURAÇÃO GERAL DOS SLIDES */
+        
+        .slide {
+            width: 100%;
+            max-width: 1000px;
+            background-color: var(--bg-cream);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            /* Garante que nada saia do card */
+            border-radius: 4px;
+        }
+        /* CABEÇALHO (Igual nos dois slides) */
+        
+        .header {
+            background-color: var(--bg-cream);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            color: var(--text-brown);
+        }
+        
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+        
+        .main-title span {
+            display: block;
+            font-size: 3.5rem;
+        }
+        /* Estrelinhas decorativas (CSS shapes ou texto) */
+        
+        .star {
+            color: #964B00;
+            /* Tom de cobre/ferrugem */
+            font-size: 3rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .star-left {
+            left: 40px;
+        }
+        
+        .star-right {
+            right: 40px;
+        }
+        /* --- SLIDE 1: INGREDIENTES --- */
+        
+        .ing-body {
+            background-color: var(--bg-mustard);
+            padding: 20px 50px 50px 50px;
+            color: var(--text-brown);
+            position: relative;
+        }
+        
+        .cursive-title {
+            font-family: 'Allura', cursive;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        
+        .columns-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .col {
+            flex: 1;
+        }
+        
+        .col h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .ing-list {
+            list-style: none;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: right;
+            /* Alinha a primeira coluna à direita conforme imagem */
+        }
+        
+        .ing-list.right-align {
+            text-align: right;
+        }
+        
+        .ing-list.left-align {
+            text-align: left;
+        }
+        
+        .ing-list li {
+            margin-bottom: 5px;
+        }
+        /* Imagem do Po */
+        
+        .po-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .po-img {
+            width: 350px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* Oval */
+            border: 4px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 204, 102, 0.4);
+            /* Brilho suave */
+        }
+        
+        .prep-body {
+            background-color: var(--bg-brown);
+            color: var(--text-light);
+            padding: 40px 50px;
+            position: relative;
+        }
+        
+        .prep-title {
+            font-family: 'Cinzel', serif;
+            /* Usando a mesma fonte do título */
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+            color: var(--bg-mustard);
+            /* Destacar em amarelo */
+        }
+        
+        .prep-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            /* Coluna da massa maior */
+            gap: 50px;
+        }
+        
+        .prep-col h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--bg-mustard);
+            text-align: center;
+        }
+        
+        .prep-list {
+            list-style: none;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        
+        .prep-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .prep-list li::before {
+            content: "•";
+            color: var(--bg-mustard);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        /* Imagem do Po */
+        
+        .po-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .po-img {
+            width: 350px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* Oval */
+            border: 4px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 204, 102, 0.4);
+            /* Brilho suave */
+        }
+        /* RESPONSIVIDADE */
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            .main-title span {
+                font-size: 2rem;
+            }
+            .star {
+                display: none;
+            }
+            /* Esconde estrelas no mobile para não sobrepor */
+            .columns-container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            /* Recheio em cima ou embaixo */
+            .ing-list {
+                text-align: center !important;
+            }
+            .steamer-img {
+                position: relative;
+                width: 200px;
+                margin: 0 auto;
+                bottom: auto;
+                right: auto;
+                display: block;
+            }
+            .prep-grid {
+                grid-template-columns: 1fr;
+            }
+            .prep-list {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="header">
+            <div class="star star-left">✦</div>
+            <h1 class="main-title">Baozi -<br><span>Kung fu panda</span></h1>
+            <div class="star star-right">✦</div>
+        </div>
+
+        <div class="ing-body">
+            <h2 class="cursive-title">Ingredientes</h2>
+
+            <div class="columns-container">
+                <div class="col">
+                    <h3>Recheio</h3>
+                    <ul class="ing-list right-align">
+                        <li>300 g de carne de porco moída 1 vez</li>
+                        <li>1 colher (sopa) de molho de shoyu</li>
+                        <li>1 colher (sopa) de amido de milho</li>
+                        <li>2 colheres (sopa) de cebolinha picada</li>
+                        <li>2 colheres (chá) de gengibre picado</li>
+                        <li>2 colheres (sopa) de saquê de cozinha</li>
+                        <li>½ colher (sopa) de óleo de gergelim</li>
+                        <li>1 colher (sopa) de molho de ostra</li>
+                        <li>sal e pimenta-do-reino moída a gosto</li>
+                        <li>60 ml de água</li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h3>Massa</h3>
+                    <ul class="ing-list left-align">
+                        <li>½ colher (chá) de fermento biológico seco</li>
+                        <li>½ xícara (chá) de água morna</li>
+                        <li>1 colher (sopa) de açúcar</li>
+                        <li>240 g de farinha de trigo</li>
+                        <li>1 pitada de sal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <img src="indereços/kung2.jpg" alt="Cesto de Bambu Baozi" class="steamer-img">
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="header">
+            <div class="star star-left">✦</div>
+            <h1 class="main-title">Baozi -<br><span>Kung fu panda</span></h1>
+            <div class="star star-right">✦</div>
+        </div>
+
+        <div class="prep-body">
+            <h2 class="prep-title">Modo de preparo</h2>
+
+            <div class="prep-grid">
+                <div class="prep-col">
+                    <h3>Massa</h3>
+                    <ul class="prep-list">
+                        <li>Numa tigela coloque o fermento, a água morna, o açúcar e misture. Deixe descansar por 10 minutos e reserve.</li>
+                        <li>Em uma tigela coloque a farinha de trigo, a esponja, tempere com sal e sove bem com as mãos (se necessário coloque um pouco mais de água) e deixe descansar por 30 minutos.</li>
+                        <li>Depois deste tempo divida a massa em 6 partes iguais de mais ou menos 50 g e faça bolinhas com as mãos. Coloque em uma assadeira, cubra com um pano umedecido e deixe descansar por mais 10 minutos.</li>
+                        <li>Depois deste tempo, abra as bolinhas com o rolo, faça discos e recheie. Coloque na panela de bambu ou uma panela que possa cozinhar a vapor.</li>
+                        <li>Coloque embaixo de cada bolinha um quadradinho de papel manteiga untado, de maneira que passe o vapor pela panela e o pãozinho não grude. Deixe descansar novamente por 20 minutos, coloque a panela de bambu dentro de uma outra panela
+                            com água fervente e leve ao forno médio.</li>
+                        <li>Cozinhe os pãezinhos por 15 minutos. Sirva quentinho.</li>
+                    </ul>
+                </div>
+
+                <div class="prep-col">
+                    <h3>Recheio</h3>
+                    <ul class="prep-list">
+                        <li>Em uma tigela misture o pernil de porco, molho de soja, amido de milho, cebolinha picada, gengibre picado, sake, óleo de gergelim, molho de ostra e tempere com sal e pimenta-do-reino moída.</li>
+                        <li>Vá misturando e despejando a água aos poucos.</li>
+                    </ul>
+
+                    <div class="po-container">
+                        <img src="indereços/kung1.jpg" alt="Po comendo Baozi" class="po-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

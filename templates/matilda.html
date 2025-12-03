@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolo da Matilda - Receita Completa</title>
+    <style>
+        /* IMPORTANDO FONTES DIVERTIDAS */
+        
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+        /* RESET E VARIÁVEIS DE COR */
+        
+         :root {
+            --bg-color: #f4efe9;
+            /* Creme claro */
+            --chocolate: #7b4432;
+            /* Marrom avermelhado/chocolate */
+            --chocolate-dark: #5a2e20;
+            --text-color: #3e2723;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            gap: 60px;
+        }
+        /* --- ESTRUTURA DOS SLIDES --- */
+        
+        .slide {
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            padding: 40px;
+            border: 2px dashed rgba(123, 68, 50, 0.3);
+            /* Borda sutil */
+            border-radius: 20px;
+            overflow: hidden;
+            /* Para cortar as decorações dos cantos */
+            box-shadow: 0 10px 25px rgba(90, 46, 32, 0.1);
+        }
+        /* DECORAÇÕES (ONDAS NOS CANTOS) */
+        
+        .blob-top-left {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: var(--chocolate);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            z-index: 0;
+        }
+        
+        .blob-bottom-right {
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background-color: var(--chocolate);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            z-index: 0;
+        }
+        /* CONTEÚDO ACIMA DAS DECORAÇÕES */
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        /* TÍTULOS */
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--chocolate-dark);
+            font-size: 3.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--chocolate);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        
+        h2 span {
+            font-size: 1.5rem;
+            /* Ícone de splash */
+        }
+        /* PILLS (TÍTULOS DE SEÇÃO) */
+        
+        .pill {
+            background-color: #8d5543;
+            /* Um tom levemente mais claro */
+            color: white;
+            padding: 10px 30px;
+            border-radius: 15px;
+            display: inline-block;
+            font-weight: bold;
+            text-transform: capitalize;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            box-shadow: 3px 3px 0px var(--chocolate-dark);
+        }
+        /* --- LAYOUT DO SLIDE 1: INGREDIENTES --- */
+        
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .ing-column ul {
+            list-style: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .ing-column li {
+            margin-bottom: 8px;
+        }
+        
+        .bruce-container {
+            display: flex;
+            justify-content: center;
+            margin-top: -20px;
+        }
+        
+        .bruce-img {
+            width: 400px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50% / 100% 100% 0 0;
+            /* Semi-círculo/Oval achatado */
+            border: 5px solid var(--bg-color);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
+            /* Efeito suave nas bordas */
+            -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+        }
+        /* --- LAYOUT DO SLIDE 2: MODO DE PREPARO --- */
+        
+        .prep-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            /* Texto maior que imagem */
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .prep-text {
+            text-align: left;
+        }
+        
+        .prep-step {
+            margin-bottom: 30px;
+        }
+        
+        .prep-step ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .prep-step li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+        
+        .prep-step li::before {
+            content: '•';
+            color: var(--chocolate);
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        .circle-frame {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 15px solid #8d5543;
+            /* Borda grossa marrom */
+            overflow: hidden;
+            box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .circle-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* DECORAÇÃO DE ESTRELINHA (Slide 2) */
+        
+        .star {
+            position: absolute;
+            color: var(--chocolate);
+            font-size: 3rem;
+            top: 20px;
+            left: 20px;
+            z-index: 2;
+        }
+        /* RESPONSIVIDADE */
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .ingredients-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .prep-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .prep-text {
+                text-align: center;
+            }
+            .prep-step li {
+                text-align: left;
+            }
+            .circle-frame {
+                width: 250px;
+                height: 250px;
+                margin-top: 20px;
+            }
+            .bruce-img {
+                width: 300px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="blob-top-left"></div>
+
+        <div class="content-wrapper">
+            <h1>Bolo da Matilda</h1>
+            <h2>Ingredientes <span></span></h2>
+
+            <div class="ingredients-grid">
+                <div class="ing-column">
+                    <div class="pill">Massa</div>
+                    <ul>
+                        <li>4 caixas de creme de leite</li>
+                        <li>4 xícaras de farinha de trigo</li>
+                        <li>4 xícaras de açúcar</li>
+                        <li>250g de manteiga</li>
+                        <li>6 ovos</li>
+                        <li>1 xícara de chocolate em pó</li>
+                        <li>2 colheres (sopa) de fermento em pó</li>
+                    </ul>
+                </div>
+
+                <div class="ing-column">
+                    <div class="pill">Cobertura</div>
+                    <ul>
+                        <li>3 latas de cobertura sabor chocolate</li>
+                    </ul>
+                </div>
+
+                <div class="ing-column">
+                    <div class="pill">Recheio</div>
+                    <ul>
+                        <li>4 latas de leite condensado</li>
+                        <li>3 colheres cheias de manteiga</li>
+                        <li>2 latas de creme de leite sem soro</li>
+                        <li>1 xícara de chocolate em pó</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bruce-container">
+                <img src="indereços/matilda2.jpg" alt="Bruce comendo o bolo de chocolate" class="bruce-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="blob-bottom-right"></div>
+        <div class="star"></div>
+
+        <div class="content-wrapper">
+            <h2>Modo de Preparo</h2>
+
+            <div class="prep-grid">
+                <div class="prep-text">
+                    <div class="prep-step">
+                        <div class="pill">Massa:</div>
+                        <ul>
+                            <li>Coloque em um recipiente o açúcar, a manteiga e as gemas e misture.</li>
+                            <li>Em seguida adicione a farinha de trigo, o chocolate em pó e o fermento e misture, seguido do creme de leite.</li>
+                        </ul>
+                    </div>
+
+                    <div class="prep-step">
+                        <div class="pill">Recheio e Montagem:</div>
+                        <ul>
+                            <li>Mexa em fogo baixo o leite condensado e o chocolate em pó com a manteiga até endurecer. Ao esfriar, adicione o creme de leite sem soro.</li>
+                            <li>Asse o bolo em temperatura de 180°C, em forma redonda, por aproximadamente 45 minutos.</li>
+                            <li>Depois de assado adicione o recheio em 2 camadas e, em seguida, coloque a cobertura no bolo.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="circle-frame">
+                    <img src="indereços/matilda.jpg" alt="Bruce e Matilda olhando o bolo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
