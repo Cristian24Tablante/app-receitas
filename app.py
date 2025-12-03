@@ -171,5 +171,16 @@ def listar_usuarios():
     except Exception as e:
         return f"Error: {str(e)}"
 
+    
+    
+@app.route('/ratatouille')
+def ratatouille():
+    """Página de receitas do ratatouille"""
+    return render_template('ratatouille.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+    
+    

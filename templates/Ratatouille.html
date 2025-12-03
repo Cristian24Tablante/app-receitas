@@ -1,13 +1,30 @@
-  <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratatouille - Receita Completa</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap');
+
+  /* =========================================
+     ESTILOS GENERAIS (GLOBALES)
+     ========================================= */
   body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    font-family: 'Oswald', Arial, sans-serif; 
+    background-color: #491B0F; 
+    color: #F0E2C7;
+    overflow-x: hidden;
   }
 
-  /* Botão de voltar */
+  h1, h2, p, ul, ol, li {
+    margin: 0; 
+    padding: 0;
+  }
+
+  /* Botão de voltar (Fixo na tela) */
   .voltar-btn {
     position: fixed;
     top: 15px;
@@ -20,37 +37,276 @@
     font-size: 16px;
     z-index: 1000;
     transition: 0.3s;
+    font-family: Arial, sans-serif;
   }
 
   .voltar-btn:hover {
     background: black;
   }
 
-  /* Imagens */
-  .imagem {
+  /* =========================================
+     STYLE 1: SEÇÃO INGREDIENTES
+     ========================================= */
+  .section-ingredientes {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh; /* Ocupa al menos toda la pantalla */
+    padding: 50px 20px;
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Columna Izquierda (Lista) */
+  .ingredientes-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .title-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+
+  .title-container h1 {
+    font-size: 80px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    line-height: 0.9;
+  }
+
+  .orange-decor {
+    position: absolute;
+    background-color: #C65D33;
+    width: 250px;
+    height: 180px;
+    top: 20px;
+    left: -150px;
+    z-index: 1;
+  }
+
+  .ingredients-list {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .ingredients-list p {
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* Columna Derecha (Imagen Remy) */
+  .ingredientes-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 50px;
+  }
+
+  .remy-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .dish-title {
+    font-size: 48px;
+    text-transform: uppercase;
+    margin-top: 30px;
+    font-weight: normal;
+  }
+
+  /* =========================================
+     STYLE 2: SEÇÃO MODO DE PREPARO
+     ========================================= */
+  .section-preparo {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #42160A; /* Ligeramente diferente o igual, según prefieras */
+    border-top: 2px solid #C65D33; /* Separador visual */
+  }
+
+  /* Columna Izquierda (Imagen Plato) */
+  .preparo-left {
+    width: 35%;
+    position: relative;
+  }
+
+  .preparo-left img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-
-    transition: transform 0.5s ease; /* animação */
   }
 
-  /* Zoom interativo */
-  .imagem:hover {
-    transform: scale(1.05);
+  /* Columna Derecha (Texto Pasos) */
+  .preparo-right {
+    width: 65%;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: center;
   }
 
+  .small-title {
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .main-title-preparo {
+    font-size: 64px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #F0E2C7;
+  }
+
+  .steps-list {
+    list-style: none;
+    font-size: 22px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .steps-list li {
+    margin-bottom: 15px;
+  }
+
+  .footer-time {
+    margin-top: 50px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  /* =========================================
+     RESPONSIVE (MÓVIL)
+     ========================================= */
+  @media (max-width: 900px) {
+    /* Ajustes Style 1 */
+    .section-ingredientes {
+      flex-direction: column;
+      align-items: center;
+    }
+    .ingredientes-left, .ingredientes-right {
+      width: 100%;
+      margin-bottom: 50px;
+    }
+    .title-container h1 {
+        font-size: 60px;
+        text-align: center;
+    }
+    .orange-decor {
+        left: 50%;
+        transform: translateX(-80%);
+        width: 200px;
+        height: 140px;
+    }
+
+    /* Ajustes Style 2 */
+    .section-preparo {
+      flex-direction: column;
+      height: auto;
+    }
+    .preparo-left {
+      width: 100%;
+      height: 300px;
+    }
+    .preparo-right {
+      width: 100%;
+      padding: 30px;
+    }
+    .main-title-preparo {
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
+  }
 </style>
 </head>
 <body>
 
-  <!-- Botão voltar -->
-  <a class="voltar-btn" href="file:///C:/Users/khaue_silva/Downloads/VScode/SpoilerComSabor.html">Voltar</a>
+  <a class="voltar-btn" href="/">Voltar</a>
+  
+  <div class="section-ingredientes">
+    
+    <div class="ingredientes-left">
+      <div class="title-container">
+        <div class="orange-decor"></div>
+        <h1>Ingredientes</h1>
+      </div>
+      
+      <div class="ingredients-list">
+        <p>2 Abobrinhas</p>
+        <p>2 Berinjelas</p>
+        <p>2 Cebolas</p>
+        <p>3 Tomates</p>
+        <p>1 Pimentão Verde</p>
+        <p>1 Pimentão Amarelo</p>
+        <p>1 Pimentão Vermelho</p>
+        <p>Azeite a gosto</p>
+        <p>Alecrim a gosto</p>
+        <p>Manjericão a gosto</p>
+        <p>Alho a gosto</p>
+        <p>Sal a gosto</p>
+        <p>Louro a gosto</p>
+        <p>Molho de tomate para cobrir o fundo da forma</p>
+      </div>
+    </div>
 
-  <!-- Imagens -->
-  <img src="{{ url_for('static', filename='imagens/Ratatouille1.png') }}" class="imagem">
-  <img src="imagens/Ratatouille2.png" class="imagem">
+    <div class="ingredientes-right">
+        <img src="https://www.latercera.com/resizer/v2/VCIJ4ILQNBGN5K77OMDN6ELQSM.jpg?auth=06a168c5c5c0710d8f5173f6248885e9d649adbc15771d5e2665e80cd6c209b9&smart=true&width=800&height=445&quality=70" class="remy-image" alt="Remy Ratatouille">
+        
+        <h2 class="dish-title">- RATATOUILLE</h2>
+    </div>
+      
+  </div>
+
+  <div class="section-preparo">
+    
+    <div class="preparo-left">
+      <img src="https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?q=80&w=1000&auto=format&fit=crop" alt="Ratatouille plato final">
+    </div>
+
+    <div class="preparo-right">
+      <div class="small-title">- RATATOUILLE</div>
+      
+      <div class="main-title-preparo">MODO DE PREPARO</div>
+      
+      <ol class="steps-list">
+        <li>1. Corte os vegetais em rodelas finas sem as sementes.</li>
+        <li>2. Cubra o fundo de uma forma com o molho de tomate.</li>
+        <li>3. Monte tudo intercalando com os vegetais.</li>
+        <li>4. Amasse o alho e espalhe por cima acrescentando o sal e o alecrim a gosto.</li>
+        <li>5. Regue com um pouco de azeite e cubra com papel-manteiga ou alumínio.</li>
+        <li>6. Leve ao forno por 40 minutos a uma temperatura de 180° C a 200° C.</li>
+      </ol>
+
+      <div class="footer-time">
+        Modo de preparo : 40min
+      </div>
+    </div>
+
+  </div>
 
 </body>
 </html>
