@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beignets - A Princesa e o Sapo</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleHeader.css') }}">
+    <style>
+        /* IMPORTANDO FONTES */
+        /* 'Playfair Display' para títulos elegantes e 'Montserrat' para o texto limpo */
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap');
+         :root {
+            --text-green: #4A5D23;
+            /* Verde musgo escuro para o texto */
+            --bg-white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #e8f5e9;
+            /* Fundo verde bem clarinho fora dos slides */
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            gap: 50px;
+            color: var(--text-green);
+        }
+        /* CONFIGURAÇÃO DO SLIDE (CARD) */
+        
+        .slide {
+            width: 100%;
+            max-width: 800px;
+            /* Mais estreito para parecer uma folha A4/Convite */
+            background-color: var(--bg-white);
+            position: relative;
+            padding: 100px 60px 60px 60px;
+            /* Padding grande no topo por causa das folhas */
+            box-shadow: 0 10px 30px rgba(74, 93, 35, 0.15);
+            min-height: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* DECORAÇÃO DE FOLHAS (Cantos) */
+        
+        .leaf-corner {
+            position: absolute;
+            width: 250px;
+            pointer-events: none;
+            /* Deixa clicar através da imagem */
+            opacity: 0.9;
+        }
+        
+        .top-left {
+            top: -20px;
+            left: -20px;
+            transform: rotate(0deg);
+        }
+        
+        .top-right {
+            top: -20px;
+            right: -20px;
+            transform: scaleX(-1);
+        }
+        /* Espelha a imagem */
+        
+        .bottom-left {
+            bottom: -20px;
+            left: -20px;
+            transform: scaleY(-1);
+        }
+        
+        .bottom-right {
+            bottom: -20px;
+            right: -20px;
+            transform: scale(-1, -1);
+        }
+        /* TÍTULOS */
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            color: var(--text-green);
+        }
+        
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            font-weight: 600;
+            color: var(--text-green);
+        }
+        /* LISTA DE INGREDIENTES (Slide 1) */
+        
+        .ingredients-list {
+            list-style: none;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 2;
+            text-transform: uppercase;
+            color: #556b2f;
+        }
+        /* IMAGEM DA TIANA (Slide 1) */
+        
+        .tiana-img-container {
+            margin-top: auto;
+            /* Empurra para o fundo se sobrar espaço */
+            margin-bottom: 20px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tiana-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+        /* LISTA DE PREPARO (Slide 2) */
+        
+        .prep-list {
+            list-style: none;
+            text-align: center;
+            font-size: 0.95rem;
+            /* Fonte um pouco menor pois o texto é longo */
+            line-height: 2.2;
+            text-transform: uppercase;
+            width: 100%;
+            padding: 0 20px;
+            font-weight: 500;
+        }
+        
+        .prep-list li {
+            margin-bottom: 5px;
+        }
+        /* RESPONSIVIDADE */
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 80px 20px 40px 20px;
+                min-height: auto;
+            }
+            .leaf-corner {
+                width: 150px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            .ingredients-list,
+            .prep-list {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+        <div class="header-container">
+
+            {% if session.get('user_id') %}
+            <div class="user-info">
+                <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
+                <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+            </div>
+            {% endif %}
+
+            <h1 class="titulo">Spoiler com Sabor</h1>
+
+        </div>
+        <nav class="nav-links">
+            <a href="#">Início</a>
+            <a href="#">Séries</a>
+            <a href="#">Filmes</a>
+            <a href="#">Receitas</a> {% if session.get('user_id') %}
+
+            <a href="/logout">Sair</a> {% else %}
+            <a href="/login">Entrar</a>
+            <a href="/cadastro">Cadastrar</a> {% endif %}
+
+        </nav>
+    </header>
+    <div class="slide">
+        <img src="indereços/folha.png" class="leaf-corner top-left" alt="Folhas canto">
+        <img src="indereços/folha.png" class="leaf-corner top-right" alt="Folhas canto">
+
+        <h1>Beignets de 'A<br>Princesa e o Sapo'</h1>
+        <h2>Ingredientes</h2>
+
+        <ul class="ingredients-list">
+            <li>180 ml de água morna</li>
+            <li>5 g de fermento biológico em pó</li>
+            <li>35 g de açúcar refinado</li>
+            <li>120 ml de leite integral</li>
+            <li>1 ovo</li>
+            <li>3 g de sal refinado</li>
+            <li>420 g de farinha de trigo</li>
+            <li>30 g de manteiga sem sal derretida</li>
+            <li>1 L de óleo</li>
+            <li>100 g de açúcar de confeiteiro</li>
+        </ul>
+
+        <div class="tiana-img-container">
+            <img src="indereços/diana.webp" alt="Tiana com Beignets">
+        </div>
+
+        <img src="indereços/folha.png" class="leaf-corner bottom-left" alt="Folhas canto">
+        <img src="indereços/folha.png" class="leaf-corner bottom-right" alt="Folhas canto">
+    </div>
+
+    <div class="slide">
+        <img src="indereços/folha.png" class="leaf-corner top-left" alt="Folhas canto">
+        <img src="indereços/folha.png" class="leaf-corner top-right" alt="Folhas canto">
+
+        <h2>Preparo</h2>
+
+        <ol class="prep-list">
+            <li>1. Misture a água, o fermento e o açúcar em um recipiente.</li>
+            <li>2. Deixe descansar por, pelo menos, 15 minutos para criar uma espuma.</li>
+            <li>3. Utilize o gancho na batedeira para bater a espuma.</li>
+            <li>4. Adicione o resto dos ingredientes.</li>
+            <li>5. Deixe bater em velocidade alta por, aproximadamente, 10 minutos ou a massa estar lisa.</li>
+            <li>6. Cubra a massa com plástico-filme.</li>
+            <li>7. Leve para algum local aquecido.</li>
+            <li>8. Deixe fermentar por, aproximadamente, 40 minutos ou até que a massa dobre de volume.</li>
+            <li>9. Coloque o óleo em uma panela.</li>
+            <li>10. Leve-o para aquecer em fogo baixo.</li>
+            <li>11. Polvilhe a farinha de trigo em uma bancada.</li>
+            <li>12. Abra a massa deixando uma altura de 1 cm.</li>
+            <li>13. Corte em quadrados.</li>
+            <li>14. Leve-os para fritar até os dois lados estarem dourados.</li>
+            <li>15. Polvilhe açúcar de confeiteiro sobre os beignets.</li>
+        </ol>
+
+        <img src="indereços/folha.png" class="leaf-corner bottom-left" alt="Folhas canto">
+        <img src="indereços/folha.png" class="leaf-corner bottom-right" alt="Folhas canto">
+    </div>
+
+</body>
+
+</html>

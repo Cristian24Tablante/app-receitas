@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita de Waffles da Eleven</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --stranger-red: #E71D36;
+            --waffle-yellow: #FF9F1C;
+            --bg-color: #0d0d0d;
+            --text-color: #f0f0f0;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 2px solid var(--stranger-red);
+            padding: 20px;
+            box-shadow: 0 0 15px var(--stranger-red);
+            background-color: var(--card-bg);
+        }
+
+        h1, h2 {
+            font-family: 'Creepster', cursive; /* Fonte estilo terror/anos 80 */
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        h1 {
+            color: var(--stranger-red);
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--stranger-red);
+        }
+
+        h2 {
+            color: var(--waffle-yellow);
+            border-bottom: 2px dashed var(--waffle-yellow);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 30px 10px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+        }
+
+        .polaroid:nth-child(2) {
+            transform: rotate(2deg);
+        }
+
+        /* Placeholder para as imagens do PDF */
+        .img-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #555;
+            border: 1px solid #999;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .quote-box {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .quote {
+            font-family: 'Creepster', cursive;
+            font-size: 2em;
+            color: var(--text-color);
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5em; }
+            .gallery { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>STRANGER WAFFLES</h1>
+
+        <div class="gallery">
+            <div class="polaroid">
+               <img src="imagens/011Eggos2.jpeg" alt="Eleven no mercado" width="200" height="200">
+                <span></span>
+            </div>
+            
+            <div class="polaroid">
+  <img src="imagens/011Eggos.jpeg" alt="Eleven no mercado" width="200" height="200">
+       <span></span>
+</div>
+
+        </div>
+
+        <div class="section">
+            <h2>INGREDIENTES</h2>
+            <ul>
+                <li>2 xícaras (chá) de farinha de trigo</li>
+                <li>2 colheres (sopa) de amido de milho</li>
+                <li>2 colheres (sopa) de açúcar</li>
+                <li>2 colheres (chá) de fermento em pó</li>
+                <li>&frac12; colher (chá) de sal</li>
+                <li>3 ovos</li>
+                <li>1 e &frac34; de xícara (chá) de leite</li>
+                <li>4 colheres (sopa) de manteiga sem sal derretida</li>
+                <li>1 colher (sopa) de essência de baunilha</li>
+                <li><strong>Para finalizar:</strong> Manteiga para untar e Mel</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>MODO DE PREPARO</h2>
+            <ol>
+                <li>Em uma tigela, misture bem a farinha de trigo, o amido de milho, o açúcar, o fermento em pó e o sal e reserve.</li>
+                <li>Em uma tigela à parte, coloque os ovos e mexa.</li>
+                <li>Adicione o leite, a manteiga derretida e a essência de baunilha e mexa bem.</li>
+                <li>Junte a mistura líquida à mistura seca e mexa bastante até formar uma massa homogênea.</li>
+                <li>Unte a máquina de waffle ou frigideira com manteiga, despeje a quantidade de massa desejada e deixe fritar por 5 a 8 minutos (caso faça na frigideira, vire o waffle na metade do tempo para dourar dos dois lados).</li>
+                <li>Retire e finalize com mel.</li>
+            </ol>
+        </div>
+
+        <div class="quote-box">
+            <p class="quote">"FRIENDS DON'T LIE"</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
