@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spaghetti alla Carbonara - Eat Pray Love</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHeader.css') }}">
     <style>
         /* IMPORTANDO FONTES */
         
@@ -264,7 +265,7 @@
         </div>
 
         <div class="corner-image">
-            <img src="indereços/Eat Pray Love.jpg" alt="Julia Roberts comendo massa em Eat Pray Love">
+            <img src="{{ url_for('static', filename = 'imagens/Eat Pray Love.jpg')}}" alt="Julia Roberts comendo massa em Eat Pray Love">
         </div>
     </div>
 

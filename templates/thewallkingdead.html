@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWD - A Última Lata de Pudim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --rotten-green: #4a5e34;
+            --fresh-blood: #8a0b0b;
+            --dried-blood: #3d0303;
+            --dirty-paper: #d3cbb8;
+            --bg-color: #0a0a0a;
+            --text-color: #d1d1d1;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Special Elite', monospace;
+            /* Fonte estilo arquivo confidencial */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            /* Textura de ruído/sujeira no fundo via CSS */
+            background-image: radial-gradient(circle at 50% 50%, transparent 50%, #000 150%), repeating-linear-gradient(45deg, #111 0, #111 2px, #0a0a0a 2px, #0a0a0a 4px);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        /* Efeito de sangue respingado no canto */
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(138, 11, 11, 0.4) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(20px);
+        }
+        
+        header {
+            text-align: center;
+            border-bottom: 4px solid var(--dried-blood);
+            padding-bottom: 20px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Creepster', cursive;
+            font-size: 5rem;
+            color: var(--rotten-green);
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 4px 4px 0px #000;
+            letter-spacing: 5px;
+            /* Animação de luz falhando */
+            animation: flicker 4s infinite;
+        }
+        
+        @keyframes flicker {
+            0%,
+            18%,
+            22%,
+            25%,
+            53%,
+            57%,
+            100% {
+                opacity: 1;
+                text-shadow: 4px 4px 0px #000, 0 0 10px var(--rotten-green);
+            }
+            20%,
+            24%,
+            55% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            background-color: #000;
+            padding: 5px 15px;
+            border: 1px dashed var(--rotten-green);
+            transform: rotate(-2deg);
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .card {
+            background-color: #1a1a1a;
+            padding: 30px;
+            margin-bottom: 40px;
+            /* Borda desgastada */
+            border: 1px solid #333;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Faixa de perigo na lateral do card */
+        
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: repeating-linear-gradient( 45deg, var(--dried-blood), var(--dried-blood) 10px, #000 10px, #000 20px);
+        }
+        
+        h2 {
+            font-family: 'Creepster', cursive;
+            color: #d1d1d1;
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--rotten-green);
+            display: inline-block;
+            margin-top: 0;
+            padding-right: 20px;
+        }
+        /* Lista de Ingredientes estilo Manuscrito */
+        
+        ul.ingredients-list {
+            list-style: none;
+            padding: 0;
+            font-size: 1.1rem;
+        }
+        
+        ul.ingredients-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        ul.ingredients-list li:before {
+            content: "✖";
+            /* Marca de X */
+            color: var(--fresh-blood);
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        /* Lista de Passos Numerados */
+        
+        ol.steps-list {
+            counter-reset: steps;
+            list-style: none;
+            padding: 0;
+        }
+        
+        ol.steps-list li {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+        
+        ol.steps-list li:before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dried-blood);
+            border: 2px solid #555;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-family: 'Creepster', cursive;
+            font-size: 1.5rem;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        strong {
+            color: var(--rotten-green);
+            font-size: 1.2rem;
+            text-decoration: underline;
+            text-decoration-color: var(--fresh-blood);
+        }
+        /* Estilo da Moldura da Foto (Polaroid Suja) */
+        
+        .image-frame {
+            background: #e0e0e0;
+            /* Papel branco meio sujo */
+            padding: 10px 10px 50px 10px;
+            /* Espaço extra embaixo para o texto */
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            transform: rotate(2deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            color: #222;
+            font-weight: bold;
+            /* Textura de papel velho na borda */
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.05) 3px);
+        }
+        /* Estilo da Imagem em si */
+        
+        .twd-photo {
+            width: 100%;
+            /* Ocupa a largura da moldura */
+            height: auto;
+            /* Altura automática */
+            display: block;
+            border: 1px solid #555;
+            /* Borda fina na foto */
+            /* Filtro para parecer foto velha e apocalíptica */
+            filter: sepia(40%) contrast(110%) grayscale(20%);
+        }
+        
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 60px;
+            color: #555;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+        /* Responsividade */
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .container {
+                padding: 10px;
+            }
+            .image-frame {
+                transform: rotate(0deg);
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>The Walking Dead</h1>
+            <span class="subtitle">Propriedade de Carl Grimes - NÃO TOQUE</span>
+        </header>
+
+        <main>
+            <div class="image-frame">
+                <img src="{{ url_for('static', filename = 'imagens/Dead1.jpg')}}" alt="Carl Grimes no telhado comendo pudim" class="twd-photo">
+
+                <p style="margin-top:15px; font-family: 'Special Elite'; font-size: 1.2rem;">
+                    O zumbi lá dentro pegou meu sapato, não me pegou.
+                </p>
+            </div>
+
+            <section class="card">
+                <h2>Suprimentos Necessários</h2>
+                <ul class="ingredients-list">
+                    <li>1/2 xícara de açúcar (se achar)</li>
+                    <li>3 colheres de sopa de cacau em pó</li>
+                    <li>3 colheres de sopa de amido</li>
+                    <li>1/4 colher de chá de sal</li>
+                    <li>2 xícaras de leite (pode ser em pó reidratado)</li>
+                    <li>2 gemas de ovo</li>
+                    <li>2 colheres de sopa de manteiga</li>
+                    <li>1 colher de chá de extrato de baunilha</li>
+                </ul>
+            </section>
+
+            <div class="image-frame" style="transform: rotate(-2deg); position: relative; z-index: 2;">
+                <img src="{{ url_for('static', filename = 'imagens/Dead2.jpg')}}" alt="Lata gigante de pudim de chocolate" class="twd-photo">
+
+                <p style="margin-top:15px; font-family: 'Special Elite'; font-size: 1.2rem;">
+                    Achado em uma casa abandonada.
+                </p>
+            </div>
+
+            <section class="card">
+                <h2>Protocolo de Preparo</h2>
+                <ol class="steps-list">
+                    <li>
+                        <strong>Mistura Seca:</strong> Em uma panela (verifique se está limpa), misture açúcar, cacau, amido e sal. Cuidado com os caminhantes ao barulho.
+                    </li>
+                    <li>
+                        <strong>Adicionar Líquidos:</strong> Despeje o leite devagar. Use um batedor improvisado se necessário.
+                    </li>
+                    <li>
+                        <strong>Aquecimento:</strong> Leve ao fogo médio. Mexa sem parar. Não deixe queimar, suprimentos são escassos. Espere engrossar (6-10 min).
+                    </li>
+                    <li>
+                        <strong>Finalização:</strong> Tire do fogo. Adicione manteiga e baunilha.
+                    </li>
+                    <li>
+                        <strong>Proteção:</strong> Cubra com plástico tocando a superfície para não criar película. Esconda bem.
+                    </li>
+                    <li>
+                        <strong>Espera:</strong> Deixe esfriar. Coma direto da lata sentado em um telhado enquanto observa o caos.
+                    </li>
+                </ol>
+            </section>
+        </main>
+
+        <footer>
+            <p>Sobreviva. E coma pudim.</p>
+            <p style="font-size: 0.7rem;">ALERTA: Manter refrigerado se a energia ainda funcionar.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

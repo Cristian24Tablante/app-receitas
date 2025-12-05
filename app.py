@@ -1,141 +1,223 @@
 from flask import Flask, render_template, request, jsonify, session
+from database import get_db
+
+
+
+# --- AGREGA ESTA LÍNEA AQUÍ ---
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import get_db  # Importa a função do arquivo database.py acima
+# ------------------------------
+
+
 
 app = Flask(__name__)
-app.secret_key = 's3cr3t_k3y' # Recomendação: Em produção, use variáveis de ambiente
+app.secret_key = 's3cr3t_k3y'
 
-# ---------------- ROTAS DE PÁGINAS (GET) ----------------
 
 @app.route('/')
 def homepage():
-    """Página principal"""
-    return render_template('home.html')
+    """Página principal - muestra home.html"""
+    return render_template('home.html')  # ← home.html es la página inicial
+
+
 
 @app.route('/cadastro')
 def cadastro_page():
-    """Página de registro (formulário)"""
+    """Página de registro"""
     return render_template('cadastro.html')
 
-@app.route('/login', methods=['GET'])
-def login_page_view():
-    """Mostra o formulário de login"""
-    return render_template('logIn.html')
 
-# ---------------- ROTAS DE API / LÓGICA (POST) ----------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar_usuario():
-    """Processa o registro do usuário"""
+    """Ruta para procesar el registro del usuario"""
     
-    # 1. Obter dados
+    # 1. Obtener datos del formulario
     nome = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')
     confirm_password = request.form.get('confirmPassword')
 
-    # 2. Validações básicas
+    # 2. Validaciones básicas
     if not nome or not email or not password:
-        return jsonify({'success': False, 'message': 'Todos os campos são obrigatórios'})
+        return jsonify({'success': False, 'message': 'Todos los campos son obligatorios'})
 
     if password != confirm_password:
-        return jsonify({'success': False, 'message': 'As senhas não coincidem'})
+        return jsonify({'success': False, 'message': 'Las contraseñas no coinciden'})
 
     try:
         db = get_db()
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
 
-        # 3. Verificar se email já existe
+
+
+
+        # 3. Verificar si el email ya existe
         cursor.execute("SELECT id FROM usuarios WHERE email = %s", (email,))
-        if cursor.fetchone():
+        usuario_existente = cursor.fetchone()
+
+        if usuario_existente:
             cursor.close()
             db.close()
-            return jsonify({'success': False, 'message': 'Este email já está registrado'})
+            return jsonify({'success': False, 'message': 'Este email ya está registrado'})
 
-        # 4. Encriptar senha
+        # 4. Encriptar la contraseña (Hash)
+        # Esto convierte "12345" en algo como "pbkdf2:sha256:..."
         senha_hash = generate_password_hash(password)
 
-        # 5. Inserir no banco
+        # 5. Insertar en la base de datos
+        # Asumiendo que tu tabla tiene columnas: nome, email, senha
         sql = "INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)"
         cursor.execute(sql, (nome, email, senha_hash))
         
-        db.commit() # Salva as alterações
+        db.commit() # ¡Importante! Guarda los cambios
         
         cursor.close()
         db.close()
 
-        return jsonify({'success': True, 'message': 'Conta criada com sucesso!'})
+
+        return jsonify({'success': True, 'message': '¡Cuenta creada con éxito!'})
 
     except Exception as e:
-        return jsonify({'success': False, 'message': f'Erro no servidor: {str(e)}'})
+        return jsonify({'success': False, 'message': f'Error en el servidor: {str(e)}'})
 
-@app.route('/login', methods=['POST'])
-def login_process():
-    """Processa o login do usuário"""
+
+
+
+
+
+
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    # Si es GET, solo muestra la página
+    if request.method == 'GET':
+        return render_template('logIn.html')
+    
+    # Si es POST, procesa el login (lo que envía el JS)
     email = request.form.get('email')
     password = request.form.get('password')
 
     if not email or not password:
-        return jsonify({'success': False, 'message': 'Faltam dados'})
+        return jsonify({'success': False, 'message': 'Faltan datos'})
 
     try:
         db = get_db()
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
+
+
         
-        # 1. Buscar usuário
+        # 1. Buscar usuario por email
         cursor.execute("SELECT id, nome, senha FROM usuarios WHERE email = %s", (email,))
-        usuario = cursor.fetchone()
+        usuario = cursor.fetchone() # Devuelve un diccionario: {'id': 1, 'nome': 'Juan', 'senha': '...'}
         
         cursor.close()
         db.close()
 
-        if usuario and check_password_hash(usuario['senha'], password):
-            # 2. Login bem sucedido
-            session['user_id'] = usuario['id']
-            session['user_name'] = usuario['nome']
-            return jsonify({'success': True, 'message': 'Bem-vindo!'})
+        if usuario:
+            # 2. Verificar la contraseña (Hash vs Texto plano)
+            senha_hash = usuario['senha']
+            
+            if check_password_hash(senha_hash, password):
+                # ¡Contraseña correcta!
+                # 3. Guardar usuario en la SESIÓN (Login exitoso)
+                session['user_id'] = usuario['id']
+                session['user_name'] = usuario['nome']
+                
+                return jsonify({'success': True, 'message': '¡Bienvenido!'})
+            else:
+                return jsonify({'success': False, 'message': 'Contraseña incorrecta'})
         else:
-            return jsonify({'success': False, 'message': 'Email ou senha incorretos'})
+            return jsonify({'success': False, 'message': 'Usuario no encontrado'})
 
     except Exception as e:
-        return jsonify({'success': False, 'message': f'Erro: {str(e)}'})
+        return jsonify({'success': False, 'message': f'Error: {str(e)}'})
 
 @app.route('/logout')
 def logout():
-    session.clear()
-    return render_template('home.html')
+    session.clear() # Cierra la sesión
+    return render_template('home.html') # O redirigir a login
 
-# ---------------- OUTRAS ROTAS ----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/usuarios')
 def listar_usuarios():
-    """Rota de teste para listar usuários"""
+    """Ruta para ver todos los usuarios (solo para testing)"""
     try:
         db = get_db()
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT id, nome, email, data_cadastro FROM usuarios")
         usuarios = cursor.fetchall()
         cursor.close()
         db.close()
         return jsonify(usuarios)
     except Exception as e:
-        return f"Erro: {str(e)}"
+        return f"Error: {str(e)}"
 
-# Rotas de Receitas (Simples renderização)
 @app.route('/EatPrayLove')
-def eatpraylove_page(): return render_template('EatPrayLove.html')
+def eatpraylove_page():
+    """Página de receitas de Eat Pray Love"""
+    return render_template('EatPrayLove.html')
 
+ 
 @app.route('/ratatouille')
-def ratatouille_page(): return render_template('ratatouille.html')
+def ratatouille_page():
+    """Página especial de Ratatouille"""
+    return render_template('ratatouille.html')
+
 
 @app.route('/kung')
-def kungfu_page(): return render_template('kung.html')
+def kungfu_page():
+    """Página de receitas de Kung Fu Panda"""
+    return render_template('kung.html')
 
 @app.route('/matilda')
-def matilda_page(): return render_template('matilda.html')
+def matilda_page():
+    """Página de receitas de Matilda"""
+    return render_template('matilda.html')
+
 
 @app.route('/beignets')
-def beignets_page(): return render_template('beignets.html')
+def beignets_page():
+    """Página de receitas de Beignets"""
+    return render_template('beignets.html')
+
+@app.route('/breakbad')
+def breakbad_page():
+    """Página de receitas de Breaking Bad"""
+    return render_template('breakbad.html')
+
+@app.route('/thewalkingdead')
+def thewalkingdead_page():
+    """Página de receitas de The Walking Dead"""
+    return render_template('thewallkingdead.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+    

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Blue Sky - Breaking Bad Style</title>
+    <style>
+        /* Reset e Fontes */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            /* Fundo gradiente inspirado no céu do deserto de Albuquerque e o azul do produto */
+            background: linear-gradient(to bottom, #81d4fa, #e1f5fe);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        /* Container Principal */
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+            border-top: 10px solid #2E7D32;
+            /* Verde Tabela Periódica */
+        }
+        /* Estilos de Imagem */
+        
+        .img-banner {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            /* Corta a imagem para caber sem distorcer */
+            border-radius: 4px;
+            border-bottom: 5px solid #FBC02D;
+            /* Faixa Amarela (Traje de proteção) */
+            margin-bottom: 20px;
+            filter: sepia(0.2) contrast(1.1);
+            /* Filtro levemente amarelado tipo México/Deserto */
+        }
+        
+        .img-product {
+            float: right;
+            width: 200px;
+            height: auto;
+            border-radius: 50%;
+            /* Imagem redonda */
+            border: 4px solid #0288D1;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            shape-outside: circle(50%);
+            box-shadow: 0 5px 15px rgba(3, 169, 244, 0.4);
+        }
+        
+        .img-footer {
+            display: block;
+            margin: 30px auto 0;
+            width: 100px;
+            opacity: 0.8;
+        }
+        /* Cabeçalho */
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+        }
+        
+        h1 {
+            color: #1B5E20;
+            font-size: 3rem;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+        /* Efeito Tabela Periódica */
+        
+        h1 span.element {
+            background-color: #2E7D32;
+            color: white;
+            padding: 0 10px;
+            display: inline-block;
+            border: 2px solid #1B5E20;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+        }
+        
+        h1 span.element:hover {
+            background-color: #43A047;
+        }
+        
+        .subtitle {
+            color: #0277BD;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+        /* Seções */
+        
+        h2 {
+            color: #00838F;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            border-left: 6px solid #00BCD4;
+            padding-left: 15px;
+            background: linear-gradient(90deg, #E0F7FA, transparent);
+        }
+        /* Lista de Ingredientes */
+        
+        ul.ingredientes {
+            list-style-type: none;
+            background-color: #E0F7FA;
+            /* Azul muito pálido */
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #B2EBF2;
+        }
+        
+        ul.ingredientes li {
+            padding: 8px 0;
+            border-bottom: 1px solid #B2EBF2;
+        }
+        
+        ul.ingredientes li:last-child {
+            border-bottom: none;
+        }
+        
+        ul.ingredientes li::before {
+            content: "◆";
+            /* Losango lembrando cristal */
+            color: #00BCD4;
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+        /* Lista de Preparo */
+        
+        ol.preparo {
+            counter-reset: steps;
+            list-style: none;
+        }
+        
+        ol.preparo li {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 25px;
+        }
+        
+        ol.preparo li::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #263238;
+            /* Cinza escuro industrial */
+            color: #4CAF50;
+            /* Verde neon */
+            border-radius: 4px;
+            /* Quadrado (elemento químico) */
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            /* Fonte técnica */
+            border: 2px solid #4CAF50;
+        }
+        /* Nota de Perigo */
+        
+        .warning-box {
+            background-color: #FFF3E0;
+            border: 2px solid #FF9800;
+            color: #E65100;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .warning-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        /* Responsividade */
+        
+        @media (max-width: 600px) {
+            .img-product {
+                float: none;
+                display: block;
+                margin: 0 auto 20px auto;
+                width: 150px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <img src="{{ url_for('static', filename = 'imagens/breakingbad4.webp')}}" alt="Cenário Breaking Bad" class="img-banner">
+
+        <header>
+            <h1><span class="element">Br</span>eaking <span class="element">ba</span>d</h1>
+            <p class="subtitle">Fórmula Química da Bala Blue Sky (Pureza 99.1%)</p>
+        </header>
+
+        <section>
+            <img src="{{ url_for('static', filename = 'imagens/breakingbad3.webp')}}" alt="Cristais Azuis" class="img-product">
+
+            <h2>Reagentes (Ingredientes)</h2>
+            <ul class="ingredientes">
+                <li>3 xícaras de açúcar granulado</li>
+                <li>1 xícara e 1/4 de xarope de milho (Glucose)</li>
+                <li>1 xícara de água H₂O</li>
+                <li>Corante alimentício <span class="crystal-decor">AZUL CLARO</span> (Gel)</li>
+                <li>1 colher de chá de aromatizante (Menta ou Baunilha)</li>
+                <li>Termômetro de precisão culinária</li>
+                <li>Tabuleiro de alumínio</li>
+            </ul>
+        </section>
+
+        <div style="clear: both;"></div>
+        </section>
+
+        <section>
+            <h2>Procedimento de Síntese</h2>
+            <ol class="preparo">
+                <li>
+                    <strong>Preparação do Ambiente:</strong> Coloque em uma assadeira de alumínio com óleo. Certifique-se de que não há contaminação.
+                </li>
+                <li>
+                    <strong>Mistura Inicial:</strong> Em uma panela, dissolva o açúcar, a glucose e a água em fogo médio.
+                </li>
+                <li>
+                    <strong>Ebulição Controlada:</strong> Aumente o fogo. <em>Não mexa mais</em>. Deixe a mistura atingir o ponto de ebulição.
+                </li>
+                <li>
+                    <strong>Ponto de Quebra (Hard Crack):</strong> Use o termômetro. A temperatura deve atingir exatos <strong>150°C</strong>.
+                </li>
+                <li>
+                    <strong>Pigmentação:</strong> Retire do calor. Adicione o corante azul e a essência. Misture rapidamente para obter a cor "Blue Sky".
+                </li>
+                <li>
+                    <strong>Cristalização:</strong> Despeje na assadeira. Aguarde o resfriamento total até virar vidro sólido.
+                </li>
+                <li>
+                    <strong>Fragmentação:</strong> Quebre a placa sólida para criar os cristais irregulares característicos.
+                </li>
+            </ol>
+        </section>
+
+        <div class="warning-box">
+            <span class="warning-icon">⚠️</span>
+            <div>
+                <strong>AVISO DE SEGURANÇA:</strong>
+                <p>O xarope atinge temperaturas perigosas. Respeite a química. Use proteção.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <img src="{{ url_for('static', filename = 'imagens/breakingbad2.webp')}}" alt="Heisenberg Sketch" class="img-footer" style="
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+         ">
+
+            <p style="font-size: 0.8rem; color: #777; margin-top: 8px;">"Say my name."</p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
