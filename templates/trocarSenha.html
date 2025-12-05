@@ -1,0 +1,132 @@
+{% extends "fundo.html" %}
+
+{% block title %}Trocar Senha - Spoiler com Sabor{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="logo">
+        <p>Aprenda as receitas seus filmes e séries favoritos</p>
+    </div>
+    
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Trocar Senha</h2>
+            <p>Mantenha sua conta segura</p>
+        </div>
+        
+        <form id="changePasswordForm">
+            <div class="form-group">
+                <label for="currentPassword">Senha Atual</label>
+                <div class="password-container">
+                    <input type="password" id="currentPassword" name="currentPassword" class="form-control" placeholder="Sua senha atual" required>
+                    <span class="password-toggle" onclick="toggleVisibility('currentPassword', this)">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <hr style="border-top: 1px solid #333; margin: 20px 0;">
+
+            <div class="form-group">
+                <label for="newPassword">Nova Senha</label>
+                <div class="password-container">
+                    <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Crie sua nova senha segura" required>
+                    <span class="password-toggle" onclick="toggleVisibility('newPassword', this)">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmNewPassword">Confirmar Nova Senha</label>
+                <div class="password-container">
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="form-control" placeholder="Digite novamente a nova senha" required>
+                    <span class="password-toggle" onclick="toggleVisibility('confirmNewPassword', this)">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Atualizar Senha</button>
+        </form>
+        
+        <div class="login-link">
+            <a href="/">Voltar para o Início</a>
+        </div>
+        <div class="devices"></div>
+    </div>
+</div>
+
+<style>
+/* Estilos necessários para o ícone de mostrar/ocultar senha */
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+</style>
+
+<script>
+// Função genérica para mostrar/ocultar senha
+function toggleVisibility(inputId, toggleElement) {
+    const passwordInput = document.getElementById(inputId);
+    const icon = toggleElement.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.className = 'far fa-eye-slash';
+    } else {
+        passwordInput.type = 'password';
+        icon.className = 'far fa-eye';
+    }
+}
+
+// Lógica de Submissão do Formulário
+document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+    if (newPassword !== confirmNewPassword) {
+        alert('Erro: A nova senha e a confirmação de senha não coincidem.');
+        return; 
+    }
+    
+    const formData = new FormData(this);
+    
+    // Remova a confirmação de senha antes de enviar para o servidor, 
+    // pois o backend geralmente só precisa da senha atual e da nova senha.
+    formData.delete('confirmNewPassword'); 
+
+    // O URL de destino para o seu endpoint de troca de senha (ex: em Flask)
+    fetch('/trocar_senha', { 
+        method: 'POST',
+        body: new URLSearchParams(formData) // Usamos URLSearchParams para dados de formulário simples
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            // Redirecionar para o login ou perfil após sucesso
+            window.location.href = '/login'; 
+        } else {
+            alert('Erro ao trocar senha: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro de rede:', error);
+        alert('Erro de conexão com o servidor.');
+    });
+});
+</script>
+
+{% endblock %}
