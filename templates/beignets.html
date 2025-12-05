@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beignets - A Princesa e o Sapo</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleHeader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{('styleHeader.css') }}">
     <style>
         /* IMPORTANDO FONTES */
         /* 'Playfair Display' para títulos elegantes e 'Montserrat' para o texto limpo */
@@ -54,7 +54,7 @@
         
         .leaf-corner {
             position: absolute;
-            width: 250px;
+            width: 350px;
             pointer-events: none;
             /* Deixa clicar através da imagem */
             opacity: 0.9;
@@ -186,7 +186,7 @@
 
             {% if session.get('user_id') %}
             <div class="user-info">
-                <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
+                <img src="'icons/user.png') }}" class="user-icon">
                 <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
             </div>
             {% endif %}
@@ -207,10 +207,10 @@
         </nav>
     </header>
     <div class="slide">
-        <img src="indereços/folha.png" class="leaf-corner top-left" alt="Folhas canto">
-        <img src="indereços/folha.png" class="leaf-corner top-right" alt="Folhas canto">
+        <img src="" class="leaf-corner top-left" alt="Folhas canto">
+        <img src="" class="leaf-corner top-right" alt="Folhas canto">
 
-        <h1>Beignets de 'A<br>Princesa e o Sapo'</h1>
+        <h1>Beignets de <br>'A Princesa e o Sapo'</h1>
         <h2>Ingredientes</h2>
 
         <ul class="ingredients-list">
@@ -227,16 +227,16 @@
         </ul>
 
         <div class="tiana-img-container">
-            <img src="indereços/diana.webp" alt="Tiana com Beignets">
+            <img src="{{url_for('static', filename='imagens/diana.webp')}}" alt="diana beignets">
         </div>
 
-        <img src="indereços/folha.png" class="leaf-corner bottom-left" alt="Folhas canto">
-        <img src="indereços/folha.png" class="leaf-corner bottom-right" alt="Folhas canto">
+        <img src="" class="leaf-corner bottom-left" alt="Folhas canto">
+        <img src="" class="leaf-corner bottom-right" alt="Folhas canto">
     </div>
 
     <div class="slide">
-        <img src="indereços/folha.png" class="leaf-corner top-left" alt="Folhas canto">
-        <img src="indereços/folha.png" class="leaf-corner top-right" alt="Folhas canto">
+        <img src="" class="leaf-corner top-left" alt="Folhas canto">
+        <img src="" class="leaf-corner top-right" alt="Folhas canto">
 
         <h2>Preparo</h2>
 
@@ -258,8 +258,9 @@
             <li>15. Polvilhe açúcar de confeiteiro sobre os beignets.</li>
         </ol>
 
-        <img src="indereços/folha.png" class="leaf-corner bottom-left" alt="Folhas canto">
-        <img src="indereços/folha.png" class="leaf-corner bottom-right" alt="Folhas canto">
+        
+        <img src="" class="leaf-corner bottom-left" alt="Folhas canto">
+        <img src="" class="leaf-corner bottom-right" alt="Folhas canto">
     </div>
 
 </body>

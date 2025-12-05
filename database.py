@@ -10,3 +10,5 @@ def get_db():
         cursorclass=DictCursor
     )
     
+print("Conexión a la base de datos establecida.")
+    
