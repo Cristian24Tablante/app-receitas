@@ -218,14 +218,40 @@
     <button class="back-btn" onclick="goBack()">
     ← Voltar
 </button>
+
+ <header>
+            <div class="header-container">
+
+                {% if session.get('user_id') %}
+                <div class="user-info">
+                    <img src="{{  url_for('static', filename='icons/user.png') }}" class="user-icon">
+                    <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+                </div>
+                {% endif %}
+
+                <h1 class="titulo">Spoiler com Sabor</h1>
+
+            </div>
+            <nav class="nav-links">
+                <a href="#">Início</a>
+                <a href="#">Séries</a>
+                <a href="#">Filmes</a>
+                <a href="#">Receitas</a> {% if session.get('user_id') %}
+
+                <a href="/logout">Sair</a> {% else %}
+                <a href="/login">Entrar</a>
+                <a href="/cadastro">Cadastrar</a> {% endif %}
+
+            </nav>
+        </header>
     <div class="container">
 
         <img src="{{ url_for('static', filename = 'imagens/breakingbad4.webp')}}" alt="Cenário Breaking Bad" class="img-banner">
 
-        <header>
+        <headr>
             <h1><span class="element">Br</span>eaking <span class="element">ba</span>d</h1>
             <p class="subtitle">Fórmula Química da Bala Blue Sky (Pureza 99.1%)</p>
-        </header>
+        </headr>
 
         <section>
             <img src="{{ url_for('static', filename = 'imagens/breakingbad3.webp')}}" alt="Cristais Azuis" class="img-product">

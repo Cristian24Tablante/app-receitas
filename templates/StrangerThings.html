@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receita de Waffles - Stranger Things Style</title>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@600;800&family=Rock+Salt&display=swap" rel="stylesheet">
-
+ 
     <style>
         /* --- CSS GERAL E LAYOUT --- */
         
@@ -620,14 +621,40 @@
 </head>
 
 <body>
+<header>
+            <div class="header-container">
 
-    <div style="text-align: center; padding-top: 10px;">
+                {% if session.get('user_id') %}
+                <div class="user-info">
+                    <img src="{{  url_for('static', filename='icons/user.png') }}" class="user-icon">
+                    <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+                </div>
+                {% endif %}
+
+                <h1 class="titulo">Spoiler com Sabor</h1>
+
+            </div>
+            <nav class="nav-links">
+                <a href="#">Início</a>
+                <a href="#">Séries</a>
+                <a href="#">Filmes</a>
+                <a href="#">Receitas</a> {% if session.get('user_id') %}
+
+                <a href="/logout">Sair</a> {% else %}
+                <a href="/login">Entrar</a>
+                <a href="/cadastro">Cadastrar</a> {% endif %}
+
+            </nav>
+        </header>
+
+
+    <div style="text-align: center; padding-top: 10px;margin-top:100px;">
         <button class="upside-down-btn" onclick="toggleUpsideDown()">Entrar no Mundo Invertido</button>
     </div>
 
-    <div class="container">
+    <div class="container" >
 
-        <header class="header-logo-container">
+        <headr class="header-logo-container">
             <div class="sticker">
                 <svg class="wires-svg" viewBox="0 0 400 250" preserveAspectRatio="none">
                   <path d="M 40,30 Q 100,50 160,30 T 280,30 T 360,25" class="wire-path" />
@@ -651,7 +678,7 @@
                     <span class="line-2">THINGS</span>
                 </div>
             </div>
-        </header>
+        </headr>
 
         <section>
             <h1>Ingredientes</h1>

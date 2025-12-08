@@ -83,6 +83,7 @@ body {
     cursor: pointer;    
     font-size: 14px;
     z-index: 1001;
+    margin: 0;
 }
 
 .back-btn:hover {
