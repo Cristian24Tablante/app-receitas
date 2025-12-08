@@ -265,6 +265,11 @@ def dorama_page():
     """Página de receitas de Doramas"""
     return render_template('dorama.html')
 
+@app.route('/StrangerThings')
+def strangerthings_page():
+    """Página de receitas de Stranger Things"""
+    return render_template('strangerThings.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
