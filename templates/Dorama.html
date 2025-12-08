@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita de Dorama - Vejo Você na Próxima Vida</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --dorama-pink: #ffe0e6;
+            --dorama-orange: #ff7e5f;
+            --soft-brown: #8d5524;
+            --text-color: #5a4a42;
+            --white: #ffffff;
+            --card-shadow: 0 10px 30px rgba(141, 85, 36, 0.15);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #fff5e6 100%);
+            color: var(--text-color);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--dorama-orange);
+            margin: 0;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--soft-brown);
+            margin-top: -10px;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .sparkle {
+            position: absolute;
+            color: var(--dorama-orange);
+            font-size: 2rem;
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
+        .recipe-card {
+            background-color: var(--white);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 40px;
+            border: 2px solid var(--dorama-pink);
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .recipe-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--dorama-pink), var(--dorama-orange));
+        }
+        
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--soft-brown);
+            font-size: 2.5rem;
+            border-bottom: 2px dashed var(--dorama-pink);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        ul.ingredients-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul.ingredients-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        ul.ingredients-list li::before {
+            content: "♥";
+            color: var(--dorama-orange);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        ol.steps-list {
+            counter-reset: steps;
+            list-style: none;
+            padding: 0;
+        }
+        
+        ol.steps-list li {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 25px;
+        }
+        
+        ol.steps-list li::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dorama-pink);
+            color: var(--soft-brown);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+        }
+        
+        strong {
+            color: var(--dorama-orange);
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            color: #aaa;
+            font-family: 'Dancing Script';
+            font-size: 2rem;
+            background-image: url('indereços/dorama.png');
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="sparkle" style="top: -20px; left: 10%;">✦</div>
+            <div class="sparkle" style="top: 10px; right: 15%; animation-delay: 0.5s">✦</div>
+            <div class="sparkle" style="bottom: -10px; left: 50%; font-size: 1.5rem; animation-delay: 3s"></div>
+
+            <h1>Vejo Você na Próxima Vida</h1>
+            <span class="subtitle">Kimchi Refogado</span>
+        </header>
+
+     
+            <img src="{{ url_for('static', filename='imagens/dorama.png') }}" class="image-placeholder" alt="Imagem de Kimchi Refogado">
+            
+           
+
+            <section class="recipe-card">
+                <h2>Ingredientes</h2>
+                <ul class="ingredients-list">
+                    <li>2 xícaras de kimchi bem fermentado, picado</li>
+                    <li>2 colheres de sopa do suco do próprio kimchi</li>
+                    <li>1 colher de sopa de óleo (geralmente vegetal ou de gergelim)</li>
+                    <li>1 dente de alho picado</li>
+                    <li>1 colher de chá de açúcar (opcional, para equilibrar a acidez)</li>
+                    <li>1 colher de sopa de gochujang (pasta de pimenta coreana) - <strong>opcional, mas deixa com aquele ar dramático</strong></li>
+                    <li>1 colher de chá de gochugaru (flocos de pimenta)</li>
+                    <li>½ cebola fatiada</li>
+                    <li>Um fio de óleo de gergelim no final</li>
+                    <li>Gergelim torrado para finalizar</li>
+                    <li>Tiras de porco ou tofu em cubos, se quiser uma versão "refeiçãzinha completa" como nos dramas</li>
+                </ul>
+            </section>
+
+            <section class="recipe-card">
+                <h2>Modo de Preparo</h2>
+                <ol class="steps-list">
+                    <li>
+                        A panela precisa ficar bem quente, <strong>como os diálogos tensos antes da reviravolta.</strong>
+                    </li>
+                    <li>
+                        Aqueça o óleo e coloque o alho para perfumar. Quando dourar, entre com a cebola.
+                    </li>
+                    <li>
+                        Adicione o kimchi picado e o suco do kimchi. Deixe chiar e dourar - o segredo é caramelizar um pouco.
+                    </li>
+                    <li>
+                        Se quiser mais intensidade, misture o gochujang e o gochugaru. <strong>Isso cria aquele brilho avermelhado típico das cenas de cozinha coreanas.</strong>
+                    </li>
+                    <li>
+                        Acrescente o açúcar só se o kimchi estiver muito ácido.
+                    </li>
+                    <li>
+                        Refogue uns 5 minutos até ficar brilhante e levemente tostado nas bordas.
+                    </li>
+                    <li>
+                        Finalize com o fio de óleo de gergelim e gergelim torrado.
+                    </li>
+                </ol>
+            </section>
+
+            <section class="recipe-card" style="background-color: #fffbf2; border-color: var(--dorama-orange);">
+                <h2>Como Servir</h2>
+                <p style="font-size: 1.1rem; text-align: center;">
+                    Quente, sobre arroz branco recém-cozido...<br>
+                    <span style="display: block; margin-top: 10px; color: var(--dorama-orange); font-weight: bold;">
+                        ...que funciona como o personagem calmo que equilibra os dramas emocionais do kimchi.
+                    </span>
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Um toque de drama para o seu jantar.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

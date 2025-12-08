@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Beignets - A Princesa e o Sapo</title>
-        <link rel="stylesheet" type="text/css" href="{{('styleHeader.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
         <style>
             
             @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap');
@@ -179,6 +180,9 @@
     </head>
 
     <body>
+         <button class="back-btn" onclick="goBack()">
+    ← Voltar
+        </button>
     <header>
             <div class="header-container">
 

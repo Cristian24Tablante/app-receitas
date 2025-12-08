@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spaghetti alla Carbonara - Eat Pray Love</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHeader.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
     <style>
         /* IMPORTANDO FONTES */
         
@@ -25,7 +26,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 0  ;
             gap: 40px;
         }
         /* CONFIGURAÇÃO DOS CARDS (SLIDES) */
@@ -189,6 +190,9 @@
 </head>
 
 <body>
+        <button class="back-btn" onclick="goBack()">
+    ← Voltar
+</button>
 <header>
         <div class="header-container">
 

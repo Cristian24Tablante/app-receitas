@@ -260,6 +260,11 @@ def thewalkingdead_page():
     """Página de receitas de The Walking Dead"""
     return render_template('thewallkingdead.html')
 
+@app.route('/dorama')
+def dorama_page():
+    """Página de receitas de Doramas"""
+    return render_template('dorama.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

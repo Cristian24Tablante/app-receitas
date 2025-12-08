@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receita Blue Sky - Breaking Bad Style</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <style>
         /* Reset e Fontes */
         
@@ -213,7 +215,9 @@
 </head>
 
 <body>
-
+    <button class="back-btn" onclick="goBack()">
+    ← Voltar
+</button>
     <div class="container">
 
         <img src="{{ url_for('static', filename = 'imagens/breakingbad4.webp')}}" alt="Cenário Breaking Bad" class="img-banner">

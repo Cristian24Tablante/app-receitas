@@ -51,7 +51,7 @@
  header {
             position: fixed;
             top: 0;
-            width: 100%;
+            width: 95%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -70,3 +70,21 @@
 body {
             margin-top: 100px; /* Ajusta este valor según la altura del header */
         }
+
+           .back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;    
+    font-size: 14px;
+    z-index: 1001;
+}
+
+.back-btn:hover {
+    background-color: rgb(203, 12, 22);
+}

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receita de Waffles da Eleven</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto+Mono:wght@400;700&display=swap');
 
@@ -117,7 +119,9 @@
     </style>
 </head>
 <body>
-
+    <button class="back-btn" onclick="goBack()">
+    ← Voltar
+</button>
     <div class="container">
         <h1>STRANGER WAFFLES</h1>
 
