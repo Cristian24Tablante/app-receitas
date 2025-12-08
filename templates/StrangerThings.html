@@ -1,176 +1,777 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receita de Waffles da Eleven</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <title>Receita de Waffles - Stranger Things Style</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@600;800&family=Rock+Salt&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto+Mono:wght@400;700&display=swap');
-
-        :root {
-            --stranger-red: #E71D36;
-            --waffle-yellow: #FF9F1C;
-            --bg-color: #0d0d0d;
-            --text-color: #f0f0f0;
-            --card-bg: #1a1a1a;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Roboto Mono', monospace;
+        /* --- CSS GERAL E LAYOUT --- */
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+            transition: background-color 0.5s, color 0.3s;
+        }
+        
+        body {
+            background-color: #d4a373;
+            background-image: url("https://www.transparenttextures.com/patterns/cork-board.png");
+            font-family: 'Montserrat', sans-serif;
+            color: #222;
             padding: 20px;
             line-height: 1.6;
+            overflow-x: hidden;
         }
-
+        
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            border: 2px solid var(--stranger-red);
-            padding: 20px;
-            box-shadow: 0 0 15px var(--stranger-red);
-            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
         }
-
-        h1, h2 {
-            font-family: 'Creepster', cursive; /* Fonte estilo terror/anos 80 */
+        
+        h1 {
+            font-family: 'Alfa Slab One', cursive;
+            font-size: 4rem;
+            color: #fdfdfd;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
             text-align: center;
             letter-spacing: 2px;
-            text-shadow: 2px 2px 0px #000;
-        }
-
-        h1 {
-            color: var(--stranger-red);
-            font-size: 3.5em;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px var(--stranger-red);
         }
-
-        h2 {
-            color: var(--waffle-yellow);
-            border-bottom: 2px dashed var(--waffle-yellow);
-            padding-bottom: 10px;
-            margin-top: 30px;
-        }
-
-        .gallery {
+        /* --- CSS DO ADESIVO (LOGO TOPO) --- */
+        
+        .header-logo-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            padding: 40px 0;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
         }
-
-        .polaroid {
-            background: white;
-            padding: 10px 10px 30px 10px;
-            color: #333;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transform: rotate(-2deg);
+        
+        .header-logo-container:hover {
+            transform: scale(0.85) rotate(1deg);
         }
-
-        .polaroid:nth-child(2) {
-            transform: rotate(2deg);
-        }
-
-        /* Placeholder para as imagens do PDF */
-        .img-placeholder {
-            width: 200px;
-            height: 200px;
-            background-color: #ddd;
+        
+        .sticker {
+            background-color: #eaddcf;
+            padding: 40px 60px;
+            border-radius: 20px;
+            position: relative;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #555;
-            border: 1px solid #999;
+            box-shadow: 0 0 0 15px #ffffff, 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+            transform: rotate(-2deg);
+            transition: all 0.5s ease;
         }
-
-        ul, ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        .quote-box {
+        
+        .text-wrapper {
+            font-family: 'Rock Salt', cursive;
+            color: #111;
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            border-top: 1px solid #333;
+            line-height: 1.2;
+            z-index: 2;
+            position: relative;
         }
-
-        .quote {
-            font-family: 'Creepster', cursive;
-            font-size: 2em;
-            color: var(--text-color);
+        
+        .line-1 {
+            font-size: 3.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 25px;
+            display: block;
         }
-
-        /* Responsividade */
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5em; }
-            .gallery { flex-direction: column; align-items: center; }
+        
+        .line-2 {
+            font-size: 3.5rem;
+            letter-spacing: 5px;
+            display: block;
+        }
+        
+        .wires-svg {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: visible;
+        }
+        
+        .wire-path {
+            fill: none;
+            stroke: #222;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        
+        .lights-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .bulb {
+            width: 12px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            background: #ccc;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            animation: glow-logo 2s infinite alternate;
+        }
+        
+        .bulb::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 2px;
+            width: 8px;
+            height: 6px;
+            background: #222;
+            border-radius: 2px;
+        }
+        
+        .b1 {
+            left: 15%;
+            top: 28px;
+            background: #ff4d4d;
+            animation-delay: 0s;
+        }
+        
+        .b2 {
+            left: 30%;
+            top: 35px;
+            background: #00e5ff;
+            animation-delay: 0.5s;
+        }
+        
+        .b3 {
+            left: 45%;
+            top: 25px;
+            background: #ffeb3b;
+            animation-delay: 1s;
+        }
+        
+        .b4 {
+            left: 60%;
+            top: 32px;
+            background: #ff4081;
+            animation-delay: 1.5s;
+        }
+        
+        .b5 {
+            left: 75%;
+            top: 22px;
+            background: #00e5ff;
+            animation-delay: 0.2s;
+        }
+        
+        .b6 {
+            left: 85%;
+            top: 30px;
+            background: #ff4d4d;
+            animation-delay: 0.7s;
+        }
+        
+        .b7 {
+            left: 20%;
+            top: 52%;
+            background: #ffeb3b;
+            animation-delay: 0.3s;
+            transform: rotate(10deg);
+        }
+        
+        .b8 {
+            left: 35%;
+            top: 58%;
+            background: #00e5ff;
+            animation-delay: 0.8s;
+            transform: rotate(-5deg);
+        }
+        
+        .b9 {
+            left: 50%;
+            top: 50%;
+            background: #ff4081;
+            animation-delay: 1.2s;
+        }
+        
+        .b10 {
+            left: 65%;
+            top: 56%;
+            background: #ff4d4d;
+            animation-delay: 1.8s;
+            transform: rotate(5deg);
+        }
+        
+        .b11 {
+            left: 80%;
+            top: 51%;
+            background: #00e5ff;
+            animation-delay: 0.4s;
+        }
+        /* --- LUZES DE DIVISÃO INTERATIVAS --- */
+        
+        .lights-string {
+            height: 10px;
+            width: 60%;
+            margin: 0 auto 30px auto;
+            border-top: 3px solid #333;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .light {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            position: relative;
+            top: -8px;
+            opacity: 0.5;
+        }
+        
+        .light:nth-child(odd) {
+            background-color: #ffca3a;
+            animation: blink-odd 1.5s infinite;
+        }
+        
+        .light:nth-child(even) {
+            background-color: #ff595e;
+            animation: blink-even 1.5s infinite;
+        }
+        
+        .light:nth-child(3n) {
+            background-color: #1982c4;
+        }
+        
+        .light:nth-child(4n) {
+            background-color: #8ac926;
+        }
+        
+        @keyframes blink-odd {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.9);
+                box-shadow: none;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 15px currentColor;
+            }
+        }
+        
+        @keyframes blink-even {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 15px currentColor;
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.9);
+                box-shadow: none;
+            }
+        }
+        
+        @keyframes glow-logo {
+            0% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 20px currentColor;
+            }
+        }
+        /* --- FOTOS E INGREDIENTES --- */
+        
+        .section-ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 30px;
+        }
+        
+        .photo-strip {
+            flex: 0 0 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            transform: rotate(-2deg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+        
+        .photo-strip:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 20;
+        }
+        
+        .polaroid {
+            width: 100%;
+            height: 120px;
+            background-color: #eee;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .polaroid:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .ingredients-list {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.0);
+            padding: 10px;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        li {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #2c2c2c;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        li:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateX(5px);
+        }
+        
+        li.checked {
+            text-decoration: line-through;
+            color: #777;
+            opacity: 0.6;
+        }
+        
+        li.checked::before {
+            content: "✓";
+            color: #009900;
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        li:not(.checked)::before {
+            content: "•";
+            color: #2c2c2c;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .eleven-badge {
+            flex: 0 0 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .circle-img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 8px solid #f0f0f0;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: #eebb44;
+            transition: transform 0.5s;
+        }
+        
+        .circle-img:hover {
+            transform: rotate(360deg);
+        }
+        
+        .circle-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .section-preparation {
+            position: relative;
+            padding-bottom: 60px;
+        }
+        
+        .prep-list li {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        /* Waffle Badge do final atualizado para aceitar imagem */
+        
+        .waffle-badge {
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 4px solid #cc9933;
+            transform: rotate(-10deg);
+            transition: transform 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #eebb44;
+            /* Cor de fundo caso não tenha imagem */
+        }
+        
+        .waffle-badge:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .waffle-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.8;
+        }
+        
+        .ribbon-text {
+            background-color: #8a7ebf;
+            color: #3e2a5e;
+            font-family: 'Alfa Slab One', cursive;
+            padding: 5px 0;
+            width: 120%;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            z-index: 2;
+        }
+        /* --- MUNDO INVERTIDO --- */
+        
+        .upside-down-btn {
+            display: block;
+            margin: 0 auto 20px auto;
+            background: #222;
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            padding: 10px 20px;
+            font-family: 'Rock Salt', cursive;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .upside-down-btn:hover {
+            background: #ff4d4d;
+            color: #222;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.8);
+        }
+        
+        body.upside-down {
+            background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
+            background-color: #0a0a1a;
+            color: #ccc;
+        }
+        
+        body.upside-down .sticker {
+            background-color: #1a1a2e;
+            box-shadow: 0 0 0 5px #444, 0 0 30px #ff0000;
+        }
+        
+        body.upside-down .text-wrapper {
+            color: #cc0000;
+            text-shadow: 0 0 5px red;
+        }
+        
+        body.upside-down .wire-path {
+            stroke: #555;
+        }
+        
+        body.upside-down .bulb,
+        body.upside-down .light {
+            animation-duration: 0.2s !important;
+            box-shadow: 0 0 20px currentColor !important;
+            opacity: 1 !important;
+        }
+        
+        body.upside-down h1 {
+            color: #cc0000;
+            text-shadow: 0 0 10px #000;
+        }
+        
+        body.upside-down li {
+            color: #ddd;
+        }
+        
+        body.upside-down li.checked {
+            color: #555;
+        }
+        
+        body.upside-down .photo-strip {
+            background: #222;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+        
+        body.upside-down .circle-img,
+        body.upside-down .waffle-badge {
+            filter: grayscale(80%) contrast(150%);
+            border-color: #555;
+        }
+        
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: float 10s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-logo-container {
+                transform: scale(0.5);
+                margin-bottom: -50px;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            .section-ingredients {
+                flex-direction: column;
+                align-items: center;
+            }
+            .photo-strip {
+                transform: none;
+                width: 100%;
+                flex-direction: row;
+                height: auto;
+            }
+            .polaroid {
+                height: 100px;
+            }
+            .waffle-badge {
+                position: relative;
+                margin-top: 20px;
+                right: auto;
+                transform: none;
+            }
         }
     </style>
 </head>
+
 <body>
-    <button class="back-btn" onclick="goBack()">
-    ← Voltar
-</button>
+
+    <div style="text-align: center; padding-top: 10px;">
+        <button class="upside-down-btn" onclick="toggleUpsideDown()">Entrar no Mundo Invertido</button>
+    </div>
+
     <div class="container">
-        <h1>STRANGER WAFFLES</h1>
 
-        <div class="gallery">
-            <div class="polaroid">
-               <img src="{{ url_for('static', filename='imagens/stranger2.jpeg') }}" alt="Waffles da Eleven" width="200" height="200">
-                <span></span>
+        <header class="header-logo-container">
+            <div class="sticker">
+                <svg class="wires-svg" viewBox="0 0 400 250" preserveAspectRatio="none">
+                  <path d="M 40,30 Q 100,50 160,30 T 280,30 T 360,25" class="wire-path" />
+                  <path d="M 60,130 Q 120,150 180,130 T 300,130 T 340,125" class="wire-path" />
+                </svg>
+                <div class="lights-container">
+                    <div class="bulb b1"></div>
+                    <div class="bulb b2"></div>
+                    <div class="bulb b3"></div>
+                    <div class="bulb b4"></div>
+                    <div class="bulb b5"></div>
+                    <div class="bulb b6"></div>
+                    <div class="bulb b7"></div>
+                    <div class="bulb b8"></div>
+                    <div class="bulb b9"></div>
+                    <div class="bulb b10"></div>
+                    <div class="bulb b11"></div>
+                </div>
+                <div class="text-wrapper">
+                    <span class="line-1">STRANGER</span>
+                    <span class="line-2">THINGS</span>
+                </div>
             </div>
-            
-            <div class="polaroid">
-                <img src="{{ url_for('static', filename='imagens/stranger1.jpeg') }}" alt="Eleven comendo waffles" width="200" height="200">
-       <span></span>
-</div>
+        </header>
 
-        </div>
+        <section>
+            <h1>Ingredientes</h1>
+            <p style="text-align: center; margin-bottom: 10px; font-size: 0.9rem; font-style: italic;">(Clique nos itens para marcar)</p>
 
-        <div class="section">
-            <h2>INGREDIENTES</h2>
-            <ul>
-                <li>2 xícaras (chá) de farinha de trigo</li>
-                <li>2 colheres (sopa) de amido de milho</li>
-                <li>2 colheres (sopa) de açúcar</li>
-                <li>2 colheres (chá) de fermento em pó</li>
-                <li>&frac12; colher (chá) de sal</li>
-                <li>3 ovos</li>
-                <li>1 e &frac34; de xícara (chá) de leite</li>
-                <li>4 colheres (sopa) de manteiga sem sal derretida</li>
-                <li>1 colher (sopa) de essência de baunilha</li>
-                <li><strong>Para finalizar:</strong> Manteiga para untar e Mel</li>
+            <div class="lights-string">
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+            </div>
+
+            <div class="section-ingredients">
+                <div class="photo-strip">
+                    <div class="polaroid">
+                        <img src="{{ url_for('static', filename='imagens/stranger1.jpeg') }}" alt="Foto Eleven 1">
+                    </div>
+                    <div class="polaroid">
+                        <img src="{{ url_for('static', filename='imagens/stranger2.jpeg') }}" alt="Foto Eleven 2">
+                    </div>
+                    <div class="polaroid">
+                        <img src="{{ url_for('static', filename='imagens/stranger3.jpeg') }}" alt="Foto Eleven 3">
+                    </div>
+                </div>
+
+                <div class="ingredients-list">
+                    <ul>
+                        <li onclick="toggleCheck(this)">2 xícaras (chá) de farinha de trigo</li>
+                        <li onclick="toggleCheck(this)">2 colheres (sopa) de amido de milho</li>
+                        <li onclick="toggleCheck(this)">2 colheres (sopa) de açúcar</li>
+                        <li onclick="toggleCheck(this)">2 colheres (chá) de fermento em pó</li>
+                        <li onclick="toggleCheck(this)">½ colher (chá) de sal</li>
+                        <li onclick="toggleCheck(this)">3 ovos</li>
+                        <li onclick="toggleCheck(this)">1 e 3/4 de xícara (chá) de leite</li>
+                        <li onclick="toggleCheck(this)">4 colheres (sopa) de manteiga derretida</li>
+                        <li onclick="toggleCheck(this)">1 colher (sopa) de essência de baunilha</li>
+                        <li onclick="toggleCheck(this)">Manteiga para untar</li>
+                        <li onclick="toggleCheck(this)">Muito Mel (Eggos style!)</li>
+                    </ul>
+                </div>
+
+                <div class="eleven-badge">
+                    <div class="circle-img">
+                       <img src="{{ url_for('static', filename='imagens/stranger4.jpeg') }}" alt="Foto Eleven">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr style="border: 0; border-top: 2px dashed #b08d55; margin: 40px 0;">
+
+        <section class="section-preparation">
+            <h1>Modo de Preparo</h1>
+            <div class="lights-string">
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+            </div>
+
+            <ul class="prep-list">
+                <li onclick="toggleCheck(this)">Em uma tigela, misture bem a farinha de trigo, o amido de milho, o açúcar, o fermento em pó e o sal.</li>
+                <li onclick="toggleCheck(this)">Em uma tigela à parte, coloque os ovos e mexa.</li>
+                <li onclick="toggleCheck(this)">Adicione o leite, a manteiga derretida e a essência de baunilha e mexa bem.</li>
+                <li onclick="toggleCheck(this)">Junte a mistura líquida à mistura seca e mexa bastante até formar uma massa homogênea.</li>
+                <li onclick="toggleCheck(this)">Junte a máquina de waffle, despeje a massa e deixe fritar por 5 a 8 minutos.</li>
+                <li onclick="toggleCheck(this)">Retire e finalize com mel.</li>
             </ul>
-        </div>
 
-        <div class="section">
-            <h2>MODO DE PREPARO</h2>
-            <ol>
-                <li>Em uma tigela, misture bem a farinha de trigo, o amido de milho, o açúcar, o fermento em pó e o sal e reserve.</li>
-                <li>Em uma tigela à parte, coloque os ovos e mexa.</li>
-                <li>Adicione o leite, a manteiga derretida e a essência de baunilha e mexa bem.</li>
-                <li>Junte a mistura líquida à mistura seca e mexa bastante até formar uma massa homogênea.</li>
-                <li>Unte a máquina de waffle ou frigideira com manteiga, despeje a quantidade de massa desejada e deixe fritar por 5 a 8 minutos (caso faça na frigideira, vire o waffle na metade do tempo para dourar dos dois lados).</li>
-                <li>Retire e finalize com mel.</li>
-            </ol>
-        </div>
-
-        <div class="quote-box">
-            <p class="quote">"FRIENDS DON'T LIE"</p>
-        </div>
+            <div class="waffle-badge" onclick="alert('Friends don\'t lie about waffles!')">
+                <img src="{{ url_for('static', filename='imagens/stranger5.jp   g') }}" alt="Waffle Badge">
+                <div class="ribbon-text">FRIENDS<br>DON'T LIE</div>
+            </div>
+        </section>
 
     </div>
 
+    <script>
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+        }
+
+        function toggleUpsideDown() {
+            const body = document.body;
+            body.classList.toggle('upside-down');
+            const btn = document.querySelector('.upside-down-btn');
+            if (body.classList.contains('upside-down')) {
+                btn.innerText = "Voltar para Hawkins";
+                createParticles();
+            } else {
+                btn.innerText = "Entrar no Mundo Invertido";
+                removeParticles();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                let p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(p);
+            }
+        }
+
+        function removeParticles() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(p => p.remove());
+        }
+    </script>
+
 </body>
+
 </html>
