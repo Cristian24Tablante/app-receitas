@@ -265,10 +265,10 @@ def dorama_page():
     """Página de receitas de Doramas"""
     return render_template('dorama.html')
 
-@app.route('/StrangerThings')
+@app.route('/Strangerhings')
 def strangerthings_page():
     """Página de receitas de Stranger Things"""
-    return render_template('strangerThings.html')
+    return render_template('/StrangerThings.html')
 
 
 if __name__ == '__main__':

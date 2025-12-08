@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receita de Dorama - Vejo Você na Próxima Vida</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleHeader.css') }}">
     <style>
          :root {
             --dorama-pink: #ffe0e6;
@@ -207,18 +209,42 @@
 </head>
 
 <body>
+<header>
+        <div class="header-container">
 
-    <div class="container">
-        <header>
+            {% if session.get('user_id') %}
+            <div class="user-info">
+                <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
+                <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+            </div>
+            {% endif %}
+
+            <h1 class="titulo">Spoiler com Sabor</h1>
+
+        </div>
+        <nav class="nav-links">
+            <a href="#">Início</a>
+            <a href="#">Séries</a>
+            <a href="#">Filmes</a>
+            <a href="#">Receitas</a> {% if session.get('user_id') %}
+
+            <a href="/logout">Sair</a> {% else %}
+            <a href="/login">Entrar</a>
+            <a href="/cadastro">Cadastrar</a> {% endif %}
+
+        </nav>
+    </header >
+    <div class="container" >
+        <headr style="background-color: rgba(255, 255, 255, 0.8);" >
             <div class="sparkle" style="top: -20px; left: 10%;">✦</div>
             <div class="sparkle" style="top: 10px; right: 15%; animation-delay: 0.5s">✦</div>
             <div class="sparkle" style="bottom: -10px; left: 50%; font-size: 1.5rem; animation-delay: 3s"></div>
 
             <h1>Vejo Você na Próxima Vida</h1>
             <span class="subtitle">Kimchi Refogado</span>
-        </header>
+        </headr>
 
-     
+        
             <img src="{{ url_for('static', filename='imagens/dorama.png') }}" class="image-placeholder" alt="Imagem de Kimchi Refogado">
             
            
