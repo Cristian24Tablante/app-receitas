@@ -15,7 +15,7 @@ def get_db():
 
 app = Flask(__name__)
 # Certifique-se de que a chave secreta é forte em produção
-app.secret_key = 's3cr3t_k3y'
+app.secret_key = 'O_MURILO_E_MUITO_FORTE_1234567890!@#$%^&*()'
 
 
 # --- Funções Auxiliares para Autenticação ---
@@ -84,10 +84,10 @@ def cadastrar_usuario():
         cursor.close()
         db.close()
 
-        return jsonify({'success': True, 'message': '¡Cuenta creada con éxito!'})
+        return jsonify({'success': True, 'message': 'Conta criada com sucesso!'})
 
     except Exception as e:
-        return jsonify({'success': False, 'message': f'Error en el servidor: {str(e)}'})
+        return jsonify({'success': False, 'message': f'Erro no servidor: {str(e)}'})
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -105,7 +105,7 @@ def login_page():
     password = request.form.get('password')
 
     if not email or not password:
-        return jsonify({'success': False, 'message': 'Faltan dados'})
+        return jsonify({'success': False, 'message': 'Faltam dados'})
 
     try:
         db = get_db()
@@ -128,11 +128,11 @@ def login_page():
                 session['user_id'] = usuario['id']
                 session['user_name'] = usuario['nome']
                 
-                return jsonify({'success': True, 'message': '¡Bienvenido!', 'redirect': url_for('homepage')})
+                return jsonify({'success': True, 'message': 'Bem-vindo!', 'redirect': url_for('homepage')})
             else:
-                return jsonify({'success': False, 'message': 'Contraseña incorrecta'})
+                return jsonify({'success': False, 'message': 'Senha incorreta'})
         else:
-            return jsonify({'success': False, 'message': 'Usuario no encontrado'})
+            return jsonify({'success': False, 'message': 'Usuário não encontrado'})
 
     except Exception as e:
         return jsonify({'success': False, 'message': f'Error: {str(e)}'})
