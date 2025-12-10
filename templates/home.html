@@ -598,9 +598,7 @@
         </div>
         <nav class="nav-links">
             <a href="#">Início</a>
-            <a href="#">Séries</a>
-            <a href="#">Filmes</a>
-            <a href="#">Receitas</a>
+            <a href="#popular-recipes-section">Receitas</a>
             {% if session.get('user_id') %}
             <a href="/logout">Sair</a>
             {% else %}
@@ -611,7 +609,7 @@
     </header>
 
     <!-- Sección Hero con Carousel (reemplazada) -->
-    <section class="hero">
+    <section class="hero" style="margin-bottom: 200px;">
         <!-- Elemento para o fundo com a imagem do carrossel -->
         <div class="hero-backdrop" id="hero-backdrop"></div>
         
@@ -626,7 +624,7 @@
         </div>
     </section>
         <!-- Carousel Sections -->
-        <section class="section">
+        <section class="section" id="popular-recipes-section">
             <h2 class="section-title">Receitas Populares</h2>
             <div class="carousel" id="popular-recipes">
                 
@@ -805,8 +803,8 @@
                 <a href="/dorama">
                     <img src="{{url_for('static' , filename = 'imagens/dorama.png')}}" alt="Spaghetti alla Carbonara">
                     <div class="recipe-info">
-                        <div class="recipe-title">Dorama </div>
-                        <div class="recipe-movie">Dorama (2010)</div>
+                        <div class="recipe-title">Vejo Você na Próxima Vida </div>
+                        <div class="recipe-movie">Vejo Você na Próxima Vida (2023)</div>
                     </div>
                 </div>
                 </a>

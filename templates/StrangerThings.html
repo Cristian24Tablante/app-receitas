@@ -622,30 +622,35 @@
 
 <body>
 <header>
-            <div class="header-container">
-
-                {% if session.get('user_id') %}
-                <div class="user-info">
-                    <img src="{{  url_for('static', filename='icons/user.png') }}" class="user-icon">
+        <div class="header-container">
+            {% if session.get('user_id') %}
+            <div class="user-dropdown-container">
+                <div class="user-info" onclick="menu_usuario()" id="user-icon-btn" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
                     <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
                 </div>
-                {% endif %}
-
-                <h1 class="titulo">Spoiler com Sabor</h1>
-
+        
+                <div class="user-dropdown" id="user-dropdown">
+                    <a href="/profile">Minha Conta</a>
+                    <a href="/trocar_senha">Mudar Senha</a>
+                    <a href="/logout">Sair</a>
+                </div>
             </div>
-            <nav class="nav-links">
-                <a href="#">Início</a>
-                <a href="#">Séries</a>
-                <a href="#">Filmes</a>
-                <a href="#">Receitas</a> {% if session.get('user_id') %}
+            {% endif %}
 
-                <a href="/logout">Sair</a> {% else %}
-                <a href="/login">Entrar</a>
-                <a href="/cadastro">Cadastrar</a> {% endif %}
-
-            </nav>
-        </header>
+            <h1 class="titulo">Spoiler com Sabor</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="#">Início</a>
+            <a href="#popular-recipes-section">Receitas</a>
+            {% if session.get('user_id') %}
+            <a href="/logout">Sair</a>
+            {% else %}
+            <a href="/login">Entrar</a>
+            <a href="/cadastro">Cadastrar</a>
+            {% endif %}
+        </nav>
+    </header>
 
 
     <div style="text-align: center; padding-top: 10px;margin-top:100px;">
@@ -757,7 +762,7 @@
             </ul>
 
             <div class="waffle-badge" onclick="alert('Friends don\'t lie about waffles!')">
-                <img src="{{ url_for('static', filename='imagens/stranger5.jp   g') }}" alt="Waffle Badge">
+                <img src="{{ url_for('static', filename='imagens/stranger5.jpg') }}" alt="Waffle Badge">
                 <div class="ribbon-text">FRIENDS<br>DON'T LIE</div>
             </div>
         </section>

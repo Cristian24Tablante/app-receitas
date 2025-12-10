@@ -83,9 +83,47 @@ body {
     cursor: pointer;    
     font-size: 14px;
     z-index: 1001;
-    margin: 0;
+    margin: 0   ;
 }
 
 .back-btn:hover {
     background-color: rgb(203, 12, 22);
+}
+
+.user-dropdown-container {
+    position: relative; /* Para o dropdown ser posicionado em relação a este container */
+}
+
+/* Oculta o dropdown por padrão */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px; /* Posição abaixo do ícone/nome do usuário */
+    right: 0;
+    background-color: var(--netflix-black); /* Fundo escuro */
+    border: 1px solid var(--netflix-dark-gray);
+    border-top: none; /* remove a borda de cima para melhor transição visual */
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1001; /* Fica acima da header e outros elementos */
+}
+
+/* Estilo para os links dentro do dropdown */
+.user-dropdown a {
+    color: var(--netflix-white);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-dropdown a:hover {
+    background-color: var(--netflix-red); /* Efeito hover estilo Netflix */
+    color: var(--netflix-white);
+}
+
+/* Classe para mostrar o dropdown */
+.user-dropdown.show {
+    display: block;
 }

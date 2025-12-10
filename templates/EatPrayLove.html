@@ -150,6 +150,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            
         }
         /* RESPONSIVIDADE (Celular) */
         
@@ -195,27 +196,32 @@
 </button>
 <header>
         <div class="header-container">
-
             {% if session.get('user_id') %}
-            <div class="user-info">
-                <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
-                <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+            <div class="user-dropdown-container">
+                <div class="user-info" onclick="menu_usuario()" id="user-icon-btn" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='icons/user.png') }}" class="user-icon">
+                    <span class="user-name" style="color: white">{{ session['user_name'] }}</span>
+                </div>
+        
+                <div class="user-dropdown" id="user-dropdown">
+                    <a href="/profile">Minha Conta</a>
+                    <a href="/trocar_senha">Mudar Senha</a>
+                    <a href="/logout">Sair</a>
+                </div>
             </div>
             {% endif %}
 
             <h1 class="titulo">Spoiler com Sabor</h1>
-
         </div>
         <nav class="nav-links">
             <a href="#">Início</a>
-            <a href="#">Séries</a>
-            <a href="#">Filmes</a>
-            <a href="#">Receitas</a> {% if session.get('user_id') %}
-
-            <a href="/logout">Sair</a> {% else %}
+            <a href="#popular-recipes-section">Receitas</a>
+            {% if session.get('user_id') %}
+            <a href="/logout">Sair</a>
+            {% else %}
             <a href="/login">Entrar</a>
-            <a href="/cadastro">Cadastrar</a> {% endif %}
-
+            <a href="/cadastro">Cadastrar</a>
+            {% endif %}
         </nav>
     </header>
     <div class="slide">
@@ -263,7 +269,7 @@
                     com a gordura do guanciale (fora do fogo ou em fogo muito baixo).</li>
                 <li><strong>Adicione a mistura de ovos:</strong> Adicione rapidamente a mistura de ovos e queijo à massa quente, mexendo vigorosamente com um pegador de massa. O calor residual da massa e da frigideira irá cozinhar os ovos e criar o molho
                     cremoso (não mexido). Adicione um pouco da água do cozimento reservada, uma colher de cada vez, até atingir a consistência cremosa desejada.</li>
-                <li><strong>Finalize e sirva:</strong> Adicione o guanciale crocante de volta à massa. Sirva imediatamente, com mais pimenta-do-reino e queijo Pecorino por cima, se desejar.</li>
+                <li><strong>Finalize e sirva:</strong> Adicione o guanciale crocante de volta à massa. Sirva imediatamente, com mais pimenta-do-reino e queijo Pecorino por </br>cima, se desejar.</li>
             </ul>
             <p class="note">O segredo está na temperatura da massa e da frigideira: a mistura de ovos deve emulsionar e engrossar, não coagular em pedaços.</p>
         </div>
