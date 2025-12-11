@@ -1,114 +1,118 @@
-{% extends "fundo.html" %}
-
-{% block title %}Cadastro - Spoiler com Sabor{% endblock %}
+{% extends "fundo.html" %} 
+{% block title %}Cadastro - Spoiler com Sabor{% endblock %} 
 
 {% block content %}
-
 <div class="container">
     <div class="logo">
-        <p>Aprenda as receitas seus filmes e séries favoritos</p>
+        <p>Aprenda as receitas dos seus filmes e séries favoritos</p>
     </div>
-    
+
     <div class="form-container">
         <div class="form-header">
-            <h2>Criar Conta</h2>
-            <p>Insira seus dados para começar</p>
+            <h2>CRIAR CONTA</h2>
+            <p>Preencha seus dados</p>
         </div>
-        
+
         <form id="registerForm">
             <div class="form-group">
                 <label for="name">Nome Completo</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Seu nome completo" required>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Seu nome" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="seu@email.com" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Senha</label>
                 <div class="password-container">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Crie uma senha segura" required>
-                    <span class="password-toggle" id="togglePassword">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Crie uma senha" required>
+                    <span class="password-toggle" onclick="toggleVisibility('password', this)">
                         <i class="far fa-eye"></i>
                     </span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="confirmPassword">Confirmar Senha</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Digite novamente sua senha" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Repita a senha" required>
             </div>
-            
-            <div class="terms">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">Concordo com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
-            </div>
-            
-            <button type="submit" class="btn">Continuar</button>
+
+            <button type="submit" class="btn">Cadastrar</button>
         </form>
-        
+
         <div class="login-link">
-            Já tem uma conta? <a href="/login">Fazer login</a>
+            Já tem conta? <a href="/login">Fazer Login</a>
         </div>
         <div class="devices"></div>
     </div>
 </div>
 
-<!-- JavaScript para enviar el formulario -->
 <script>
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    
-    fetch('/cadastrar', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            window.location.href = '/login';
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al conectar con el servidor');
-    });
-});
+    // 1. Lógica del Formulario de Registro
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-// Función para mostrar/ocultar contraseña
-document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('password');
-    const icon = this.querySelector('i');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.className = 'far fa-eye-slash';
-    } else {
-        passwordInput.type = 'password';
-        icon.className = 'far fa-eye';
+        const formData = new FormData(this);
+        const pass = document.getElementById('password').value;
+        const confirm = document.getElementById('confirmPassword').value;
+
+        // Validación simple en el frontend
+        if (pass !== confirm) {
+            alert("As senhas não coincidem!");
+            return;
+        }
+
+        fetch('/cadastrar', { // Asegúrate de que tu ruta en Python sea /cadastrar
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Conta criada com sucesso!');
+                    window.location.href = '/login';
+                } else {
+                    // Si hay error (ej: email repetido), mostramos alerta
+                    alert('Erro: ' + (data.message || 'Erro ao criar conta'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao conectar com o servidor');
+            });
+    });
+
+    // 2. Función GLOBAL para el Ojo (Llamada por el onclick del HTML)
+    function toggleVisibility(inputId, toggleElement) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = toggleElement.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.className = 'far fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            icon.className = 'far fa-eye';
+        }
     }
-});
 </script>
 
 <style>
-.password-container {
-    position: relative;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #666;
-}
+    .password-container {
+        position: relative;
+    }
+    
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #666;
+        z-index: 10; /* Asegura que el icono esté por encima del texto */
+    }
 </style>
+
 {% endblock %}

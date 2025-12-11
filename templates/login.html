@@ -1,4 +1,10 @@
-    {% extends "fundo.html" %} {% block title %}Login - Spoiler com Sabor{% endblock %} {% block content %}
+    {% extends "fundo.html" %} 
+    {% block title %}Login - Spoiler com Sabor{% endblock %} 
+    
+    {% block content %}
+    <head>
+        <title>Login - Spoiler com Sabor</title>
+        </head>
 <div class="container">
     <div class="logo">
         <p>Aprenda as receitas dos seus filmes e séries favoritos</p>
@@ -20,9 +26,9 @@
                 <label for="password">Senha</label>
                 <div class="password-container">
                     <input type="password" id="password" name="password" class="form-control" placeholder="Sua senha" required>
-                    <span class="password-toggle" id="togglePassword">
-                        <i class="far fa-eye"></i>
-                    </span>
+                    <span class="password-toggle" id="togglePassword" onclick="toggleVisibility('password', this)">
+    <i class="far fa-eye"></i>
+    </span>
                 </div>
             </div>
 
@@ -62,10 +68,15 @@
             });
     });
 
-    // Mostrar/ocultar senha
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const passwordInput = document.getElementById('password');
-        const icon = this.querySelector('i');
+    
+  
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        toggleVisibility("password", this);
+    });
+
+    function toggleVisibility(inputId, toggleElement) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = toggleElement.querySelector('i');
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
@@ -74,7 +85,9 @@
             passwordInput.type = 'password';
             icon.className = 'far fa-eye';
         }
-    });
+    }
+
+
 
     // Função da imagem + texto
     function mostrarErroLogin() {

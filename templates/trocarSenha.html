@@ -76,18 +76,18 @@
 
 <script>
 // Função genérica para mostrar/ocultar senha
-function toggleVisibility(inputId, toggleElement) {
-    const passwordInput = document.getElementById(inputId);
-    const icon = toggleElement.querySelector('i');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.className = 'far fa-eye-slash';
-    } else {
-        passwordInput.type = 'password';
-        icon.className = 'far fa-eye';
-    }
-}
+        function toggleVisibility(inputId, toggleElement) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = toggleElement.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'far fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'far fa-eye';
+            }
+        }
 
 // Lógica de Submissão do Formulário
 document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
